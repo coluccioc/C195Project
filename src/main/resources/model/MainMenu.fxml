@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
+   <children>
+      <Label fx:id="welcomeLabel" layoutX="14.0" layoutY="14.0" text="Welcome, " />
+      <Button layoutX="116.0" layoutY="274.0" mnemonicParsing="false" text="Button" />
+      <TableView fx:id="customersTable" layoutX="42.0" layoutY="57.0" prefHeight="200.0" prefWidth="291.0">
+        <columns>
+          <TableColumn fx:id="customersIDColumn" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="customersNameColumn" prefWidth="75.0" text="Name" />
+            <TableColumn fx:id="customersAddressColumn" prefWidth="75.0" text="Address" />
+            <TableColumn fx:id="customersDivisionIDColumn" prefWidth="67.0" text="Division ID" />
+            <TableColumn fx:id="customersPhoneColumn" prefWidth="83.0" text="Phone" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
