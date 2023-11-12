@@ -19,7 +19,7 @@ public class C195Application extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(C195Application.class.getResource("Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(C195Application.class.getResource("/Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 400);
         stage.setTitle("Login");
         stage.setScene(scene);

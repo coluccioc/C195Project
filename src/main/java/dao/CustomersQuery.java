@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class CustomersQuery {
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
     private static void select() throws SQLException {
-        customers.removeAll();
+        customers.clear();
         String sql = "SELECT * FROM CUSTOMERS";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
