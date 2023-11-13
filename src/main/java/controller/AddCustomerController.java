@@ -1,18 +1,24 @@
 package controller;
 
+import dao.CustomersQuery;
 import helper.Navigation;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Country;
+
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
@@ -21,24 +27,28 @@ import java.util.ResourceBundle;
  * Also contains a "Cancel" to MainMenu option
  */
 public class AddCustomerController implements Initializable {
+    @FXML
     public Label errorLabel;
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
+    @FXML
+    public TextField customerIDText;
+    @FXML
+    public TextField nameText;
+    @FXML
+    public TextField addressText;
+    @FXML
+    public TextField postalCodeText;
+    @FXML
+    public TextField phoneText;
+    @FXML
+    public ComboBox<Country> countryCombo;
+    @FXML
+    public ComboBox<String> firstLevelDivisionCombo;
 
     /**
      * Cancels Part submission, Returns to Main Menu
      * @param e ActionEvent for Back Button
      * @throws IOException
      */
-    public TextField partId;
-    public TextField partName;
-    public TextField partPrice;
-    public TextField partStock;
-    public TextField partMin;
-    public TextField partMax;
-    public TextField partSource;
-    public Label partSourceLabel;
     public void onCancel(ActionEvent e) throws IOException {
         Navigation.switchToMainMenu(e);
     }
@@ -123,6 +133,11 @@ public class AddCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        partId.textProperty().set("1");
+        try {
+            customerIDText.textProperty().set(CustomersQuery.getNextCustomerID()+"");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

@@ -60,7 +60,7 @@
          </effect>
       </TextField>
       <TextField fx:id="nameText" layoutX="300.0" layoutY="97.0" />
-      <TextField fx:id="AddressText" layoutX="300.0" layoutY="133.0" />
+      <TextField fx:id="addressText" layoutX="300.0" layoutY="133.0" />
       <TextField fx:id="postalCodeText" layoutX="300.0" layoutY="175.0" />
       <TextField fx:id="phoneText" layoutX="302.0" layoutY="217.0" />
       <ComboBox fx:id="countryCombo" layoutX="301.0" layoutY="253.0" prefWidth="150.0" />

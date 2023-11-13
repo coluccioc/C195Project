@@ -25,6 +25,24 @@ public class CustomersQuery {
             customers.add(new Customer(id,name,address,postal_Code,phone,division_ID));
         }
     }
+    private static int findNextCustomerID() throws SQLException {
+        String sql = "SELECT MAX(Customer_ID) + 1 AS NextID FROM CUSTOMERS";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        if(rs.next()) {
+            return rs.getInt("NextID");
+        }
+        else {
+            DBConnection.closeConnection();
+            return -1;
+        }
+    }
+    public static int getNextCustomerID() throws SQLException {
+        DBConnection.openConnection();
+        int nextID = findNextCustomerID();
+        DBConnection.closeConnection();
+        return nextID;
+    }
     public static ObservableList<Customer> getCustomers() throws SQLException {
         DBConnection.openConnection();
         select();
