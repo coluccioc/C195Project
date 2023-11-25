@@ -1,6 +1,7 @@
 package controller;
 
 import dao.CustomersQuery;
+import helper.CountryHelper;
 import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -138,6 +139,6 @@ public class AddCustomerController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        countryCombo.setItems(CountryHelper.listOfCountries);
     }
 }
