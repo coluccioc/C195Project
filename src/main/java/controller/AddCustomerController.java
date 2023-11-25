@@ -53,6 +53,14 @@ public class AddCustomerController implements Initializable {
     public void onCancel(ActionEvent e) throws IOException {
         Navigation.switchToMainMenu(e);
     }
+    public void onCountrySelected(){
+        if(countryCombo.getSelectionModel().isEmpty()){
+            return;
+        }
+        else{
+            firstLevelDivisionCombo.setItems(countryCombo.getSelectionModel().getSelectedItem().getFirstLevelDivisions());
+        }
+    }
     /**
      * Adds Part using the values from all text fields to a new In House or Outsourced object.
      * Performs input validation on all inputs upon submission. Cancels and populates ErrorLable if invalid
