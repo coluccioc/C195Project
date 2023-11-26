@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AppointmentsQuery;
 import dao.CustomersQuery;
 import helper.Navigation;
 import javafx.event.ActionEvent;
@@ -32,6 +33,19 @@ public class MainMenuController implements Initializable{
     private TableColumn customersDivisionIDColumn;
     @FXML
     private TableColumn customersPhoneColumn;
+
+    @FXML
+    private TableView appointmentsTable;
+    @FXML
+    private TableColumn appointmentsIDColumn;
+    @FXML
+    private TableColumn appointmentsTitleColumn;
+    @FXML
+    private TableColumn appointmentsDescriptionColumn;
+    @FXML
+    private TableColumn appointmentsLocationColumn;
+    @FXML
+    private TableColumn appointmentsTypeColumn;
     public void onAddCustomer(ActionEvent e) throws IOException {
         Navigation.switchToAddCustomer(e);
     }
@@ -53,5 +67,16 @@ public class MainMenuController implements Initializable{
         customersZipCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postal_Code"));
         customersDivisionIDColumn.setCellValueFactory(new PropertyValueFactory<>("division_ID"));
         customersPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
+
+        try {
+            appointmentsTable.setItems(AppointmentsQuery.getAppointments());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        appointmentsIDColumn.setCellValueFactory(new PropertyValueFactory<>("appointment_ID"));
+        appointmentsTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentsDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        appointmentsLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        appointmentsTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
     }
 }

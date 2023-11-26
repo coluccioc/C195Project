@@ -21,5 +21,15 @@
         </columns>
       </TableView>
       <Button layoutX="1093.0" layoutY="561.0" mnemonicParsing="false" onAction="#onLogOut" text="Log Out" />
+      <TableView fx:id="appointmentsTable" layoutX="600.0" layoutY="123.0" prefHeight="255.0" prefWidth="374.0">
+         <columns>
+            <TableColumn fx:id="appointmentsIDColumn" prefWidth="46.0" text="ID" />
+            <TableColumn fx:id="appointmentsTitleColumn" prefWidth="104.0" text="Title" />
+            <TableColumn fx:id="appointmentsDescriptionColumn" prefWidth="75.0" text="Description" />
+            <TableColumn fx:id="appointmentsLocationColumn" prefWidth="83.0" text="Location" />
+            <TableColumn fx:id="appointmentsTypeColumn" prefWidth="67.0" text="Type" />
+            <TableColumn fx:id="appointmentStartColumn" prefWidth="83.0" text="Start" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>
