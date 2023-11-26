@@ -8,6 +8,7 @@ import model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class AppointmentsQuery {
     private static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -15,6 +16,21 @@ public class AppointmentsQuery {
         appointments.clear();
         String sql = "SELECT * FROM APPOINTMENTS";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            int id = rs.getInt("APPOINTMENT_ID");
+            String title = rs.getString("TITLE");
+            String description = rs.getString("DESCRIPTION");
+            String location = rs.getString("LOCATION");
+            String type = rs.getString("TYPE");
+            appointments.add(new Appointment(id,title,description,location,type));
+        }
+    }
+    private static void select(int customer_ID) throws SQLException {
+        appointments.clear();
+        String sql = "SELECT * FROM APPOINTMENTS WHERE CUSTOMER_ID=?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,customer_ID);
         ResultSet rs = ps.executeQuery();
         while(rs.next()){
             int id = rs.getInt("APPOINTMENT_ID");
@@ -44,8 +60,14 @@ public class AppointmentsQuery {
         return nextID;
     }
     public static ObservableList<Appointment> getAppointments() throws SQLException {
+            DBConnection.openConnection();
+            select();
+            DBConnection.closeConnection();
+            return appointments;
+    }
+    public static ObservableList<Appointment> getCustomerAppointments(int customer_ID) throws SQLException {
         DBConnection.openConnection();
-        select();
+        select(customer_ID);
         DBConnection.closeConnection();
         return appointments;
     }

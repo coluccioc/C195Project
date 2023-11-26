@@ -9,7 +9,9 @@ import javafx.scene.control.Label;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +21,10 @@ import java.util.ResourceBundle;
 public class MainMenuController implements Initializable{
     @FXML
     private Label welcomeLabel;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private TextField searchCustomerText;
     @FXML
     private TableView customersTable;
     @FXML
@@ -46,6 +52,19 @@ public class MainMenuController implements Initializable{
     private TableColumn appointmentsLocationColumn;
     @FXML
     private TableColumn appointmentsTypeColumn;
+    public void onSelectCustomer() throws SQLException {
+        Customer selection = (Customer) customersTable.getSelectionModel().getSelectedItem();
+
+        if (selection != null) {
+            appointmentsTable.setItems(AppointmentsQuery.getCustomerAppointments(selection.getCustomer_ID()));
+            errorLabel.setText("");
+        }
+        else errorLabel.setText("No Customer Selected!");
+    }
+    public void onSearchCustomer(){
+        String searchText = searchCustomerText.getText();
+        customersTable.setItems(CustomersQuery.getCustomers(searchText));
+    }
     public void onAddCustomer(ActionEvent e) throws IOException {
         Navigation.switchToAddCustomer(e);
     }
