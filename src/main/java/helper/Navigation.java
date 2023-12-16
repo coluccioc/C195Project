@@ -19,7 +19,7 @@ public class Navigation {
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         stage.setX(200);
         stage.setY(200);
-        scene = new Scene(root,1200,600);
+        scene = new Scene(root,1100,600);
         stage.setScene(scene);
         stage.setTitle("Main Menu");
         stage.show();

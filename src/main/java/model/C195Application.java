@@ -29,7 +29,6 @@ public class C195Application extends Application {
         CountryHelper.listOfCountries.add(CountryHelper.usa);
         CountryHelper.listOfCountries.add(CountryHelper.canada);
     }
-
     public static void main(String[] args) {
         launch();
     }

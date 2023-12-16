@@ -29,7 +29,7 @@
             <TableColumn fx:id="appointmentsDescriptionColumn" prefWidth="75.0" text="Description" />
             <TableColumn fx:id="appointmentsLocationColumn" prefWidth="83.0" text="Location" />
             <TableColumn fx:id="appointmentsTypeColumn" prefWidth="67.0" text="Type" />
-            <TableColumn fx:id="appointmentStartColumn" prefWidth="83.0" text="Start" />
+            <TableColumn fx:id="appointmentsStartColumn" prefWidth="83.0" text="Start" />
          </columns>
       </TableView>
       <TextField fx:id="searchCustomerText" layoutX="295.0" layoutY="91.0" onAction="#onSearchCustomer" />

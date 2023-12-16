@@ -1,18 +1,22 @@
 package model;
 
+import java.sql.Timestamp;
+
 public class Appointment {
     private int appointment_ID;
     private String title;
     private String description;
     private String location;
     private String type;
+    private Timestamp start;
 
-    public Appointment(int appointment_ID, String title, String description, String location, String type) {
+    public Appointment(int appointment_ID, String title, String description, String location, String type, Timestamp start) {
         this.appointment_ID = appointment_ID;
         this.title = title;
         this.description = description;
         this.location = location;
         this.type = type;
+        this.start = start;
     }
 
     public int getAppointment_ID() {
@@ -53,5 +57,11 @@ public class Appointment {
 
     public void setType(String type) {
         this.type = type;
+    }
+    public Timestamp getStart() {
+        return start;
+    }
+    public void setStart(String type) {
+        this.start = start;
     }
 }

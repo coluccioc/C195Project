@@ -52,6 +52,8 @@ public class MainMenuController implements Initializable{
     private TableColumn appointmentsLocationColumn;
     @FXML
     private TableColumn appointmentsTypeColumn;
+    @FXML
+    private TableColumn appointmentsStartColumn;
     public void onSelectCustomer() throws SQLException {
         Customer selection = (Customer) customersTable.getSelectionModel().getSelectedItem();
 
@@ -61,7 +63,7 @@ public class MainMenuController implements Initializable{
         }
         else errorLabel.setText("No Customer Selected!");
     }
-    public void onSearchCustomer(){
+    public void onSearchCustomer() throws SQLException {
         String searchText = searchCustomerText.getText();
         customersTable.setItems(CustomersQuery.getCustomers(searchText));
     }
@@ -97,5 +99,6 @@ public class MainMenuController implements Initializable{
         appointmentsDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
         appointmentsLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
         appointmentsTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentsStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
     }
 }

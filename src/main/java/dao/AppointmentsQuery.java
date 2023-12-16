@@ -8,6 +8,7 @@ import model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Optional;
 
 public class AppointmentsQuery {
@@ -23,7 +24,9 @@ public class AppointmentsQuery {
             String description = rs.getString("DESCRIPTION");
             String location = rs.getString("LOCATION");
             String type = rs.getString("TYPE");
-            appointments.add(new Appointment(id,title,description,location,type));
+            Timestamp start = rs.getTimestamp("START");
+            start.toLocalDateTime();
+            appointments.add(new Appointment(id,title,description,location,type,start));
         }
     }
     private static void select(int customer_ID) throws SQLException {
@@ -38,7 +41,8 @@ public class AppointmentsQuery {
             String description = rs.getString("DESCRIPTION");
             String location = rs.getString("LOCATION");
             String type = rs.getString("TYPE");
-            appointments.add(new Appointment(id,title,description,location,type));
+            Timestamp start = rs.getTimestamp("START");
+            appointments.add(new Appointment(id,title,description,location,type,start));
         }
     }
     private static int findNextAppointmentID() throws SQLException {
