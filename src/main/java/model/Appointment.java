@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 public class Appointment {
     private int appointment_ID;
@@ -58,7 +59,7 @@ public class Appointment {
     public void setType(String type) {
         this.type = type;
     }
-    public Timestamp getStart() {
+    public ZonedDateTime getStart() {
         return start;
     }
     public void setStart(String type) {

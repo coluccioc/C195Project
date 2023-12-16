@@ -1,15 +1,15 @@
 package dao;
 
+import helper.TimeZoneHelper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
-import model.Customer;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Optional;
+import java.time.ZonedDateTime;
 
 public class AppointmentsQuery {
     private static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
@@ -24,8 +24,8 @@ public class AppointmentsQuery {
             String description = rs.getString("DESCRIPTION");
             String location = rs.getString("LOCATION");
             String type = rs.getString("TYPE");
-            Timestamp start = rs.getTimestamp("START");
-            start.toLocalDateTime();
+            Timestamp startUTC = rs.getTimestamp("START");
+            Timestamp start = TimeZoneHelper.translateToSystemZone(startUTC);
             appointments.add(new Appointment(id,title,description,location,type,start));
         }
     }
@@ -41,7 +41,8 @@ public class AppointmentsQuery {
             String description = rs.getString("DESCRIPTION");
             String location = rs.getString("LOCATION");
             String type = rs.getString("TYPE");
-            Timestamp start = rs.getTimestamp("START");
+            Timestamp startUTC = rs.getTimestamp("START");
+            Timestamp start = TimeZoneHelper.translateToSystemZone(startUTC);
             appointments.add(new Appointment(id,title,description,location,type,start));
         }
     }
