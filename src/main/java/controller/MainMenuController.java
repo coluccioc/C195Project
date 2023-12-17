@@ -70,8 +70,25 @@ public class MainMenuController implements Initializable{
     public void onAddCustomer(ActionEvent e) throws IOException {
         Navigation.switchToAddCustomer(e);
     }
-    public void onDeleteCustomer(ActionEvent e){
-
+    public void onDeleteCustomer(ActionEvent e) throws SQLException {
+        int selectedID = 0;
+        if(customersTable.getSelectionModel().getSelectedItem() != null){
+            Customer selected = (Customer) customersTable.getSelectionModel().getSelectedItem();
+            selectedID = selected.getCustomer_ID();
+        }
+        else {
+            errorLabel.setText("No Customer Selected!");
+            return;
+        }
+        if(AppointmentsQuery.getCustomerAppointments(selectedID).isEmpty()){
+            CustomersQuery.delete(selectedID);
+            customersTable.setItems(CustomersQuery.getCustomers());
+            appointmentsTable.setItems(AppointmentsQuery.getAppointments());
+            errorLabel.setText("");
+        }
+        else{
+            errorLabel.setText("Cannot Delete a Customer with Appointments!");
+        }
     }
     public void onLogOut(ActionEvent e) throws IOException {
         Navigation.logOut(e);

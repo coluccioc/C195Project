@@ -23,7 +23,7 @@
         </columns>
       </TableView>
       <Button layoutX="1093.0" layoutY="561.0" mnemonicParsing="false" onAction="#onLogOut" text="Log Out" />
-      <TableView fx:id="appointmentsTable" layoutX="600.0" layoutY="123.0" prefHeight="255.0" prefWidth="374.0">
+      <TableView fx:id="appointmentsTable" layoutX="622.0" layoutY="123.0" prefHeight="255.0" prefWidth="374.0">
          <columns>
             <TableColumn fx:id="appointmentsIDColumn" prefWidth="46.0" text="ID" />
             <TableColumn fx:id="appointmentsTitleColumn" prefWidth="104.0" text="Title" />
@@ -35,7 +35,7 @@
       </TableView>
       <TextField fx:id="searchCustomerText" layoutX="295.0" layoutY="91.0" onAction="#onSearchCustomer" />
       <Label layoutX="250.0" layoutY="95.0" text="Search" />
-      <Button layoutX="471.0" layoutY="238.0" mnemonicParsing="false" onAction="#onSelectCustomer" text="Select Customer" />
+      <Button layoutX="444.0" layoutY="238.0" mnemonicParsing="false" onAction="#onSelectCustomer" text="Show Customer Appointments" />
       <Label fx:id="errorLabel" layoutX="70.0" layoutY="553.0" textFill="RED" />
    </children>
 </AnchorPane>

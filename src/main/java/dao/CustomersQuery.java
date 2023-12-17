@@ -97,8 +97,14 @@ public class CustomersQuery {
     public static int update(){
         return -1;
     }
-    public static int delete(){
-        return -1;
+    public static int delete(int ID) throws SQLException {
+        DBConnection.openConnection();
+        String sql = "DELETE FROM CUSTOMERS WHERE CUSTOMER_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,ID);
+        int rowsAffected = ps.executeUpdate();
+        DBConnection.closeConnection();
+        return rowsAffected;
     }
     private static int findNextCustomerID() throws SQLException {
         String sql = "SELECT MAX(Customer_ID) + 1 AS NextID FROM CUSTOMERS";

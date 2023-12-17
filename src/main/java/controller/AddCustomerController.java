@@ -3,20 +3,13 @@ package controller;
 import dao.CountriesQuery;
 import dao.CustomersQuery;
 import dao.FirstLevelDivisionsQuery;
-import helper.CountryHelper;
 import helper.Navigation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import model.Country;
 import model.FirstLevelDivision;
 
@@ -76,11 +69,11 @@ public class AddCustomerController implements Initializable {
         String error = "";
         int id = CustomersQuery.getNextCustomerID();
         String name = nameText.getText();
-        if(name.isBlank()) errorLabel.setText("Name cannot be blank!");
+        if(name.isBlank()) {errorLabel.setText("Name cannot be blank!"); return;}
         String address = addressText.getText();
-        if(address.isBlank()) errorLabel.setText("Address cannot be blank!");
+        if(address.isBlank()){ errorLabel.setText("Address cannot be blank!"); return;}
         String postal = postalCodeText.getText();
-        if(postal.isBlank()) errorLabel.setText("Postal Code cannot be blank!");
+        if(postal.isBlank()){ errorLabel.setText("Postal Code cannot be blank!"); return;}
         String phone = phoneText.getText();
         if(phone.isBlank()) errorLabel.setText("Phone cannot be blank!");
         int divisionID;
