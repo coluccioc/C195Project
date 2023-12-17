@@ -70,6 +70,9 @@ public class MainMenuController implements Initializable{
     public void onAddCustomer(ActionEvent e) throws IOException {
         Navigation.switchToAddCustomer(e);
     }
+    public void onDeleteCustomer(ActionEvent e){
+
+    }
     public void onLogOut(ActionEvent e) throws IOException {
         Navigation.logOut(e);
     }

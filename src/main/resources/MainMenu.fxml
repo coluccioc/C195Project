@@ -11,6 +11,7 @@
    <children>
       <Label fx:id="welcomeLabel" layoutX="14.0" layoutY="14.0" text="Welcome, " />
       <Button layoutX="211.0" layoutY="398.0" mnemonicParsing="false" onAction="#onAddCustomer" text="Add Customer" />
+      <Button layoutX="323.0" layoutY="398.0" mnemonicParsing="false" onAction="#onDeleteCustomer" text="Delete Customer" />
       <TableView fx:id="customersTable" layoutX="70.0" layoutY="123.0" prefHeight="255.0" prefWidth="374.0">
         <columns>
           <TableColumn fx:id="customersIDColumn" prefWidth="46.0" text="ID" />

@@ -1,5 +1,6 @@
 package dao;
 
+import controller.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Customer;
@@ -7,6 +8,8 @@ import model.Customer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 
 public class CustomersQuery {
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
@@ -60,6 +63,42 @@ public class CustomersQuery {
                 }
             }
         }
+    }
+    public static int insert(int ID, String name,String address,String postal,String phone,int divID) throws SQLException {
+        DBConnection.openConnection();
+        ZonedDateTime now = ZonedDateTime.now();
+        Timestamp nowTimestamp = Timestamp.from(now.toInstant());
+        String sql = "INSERT INTO CUSTOMERS (CUSTOMER_ID , " + //1
+                "CUSTOMER_NAME," + //2
+                "ADDRESS," + //3
+                "POSTAL_CODE," + //4
+                "PHONE," + //5
+                "CREATE_DATE," + //6
+                "CREATED_BY," + //7
+                "LAST_UPDATE," + //8
+                "LAST_UPDATED_BY," + //9
+                "DIVISION_ID) " + //10
+                "VALUES(?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1, ID);
+        ps.setString(2, name);
+        ps.setString(3, address);
+        ps.setString(4, postal);
+        ps.setString(5, phone);
+        ps.setTimestamp(6, nowTimestamp);
+        ps.setString(7, LoginController.username);
+        ps.setTimestamp(8, nowTimestamp);
+        ps.setString(9, LoginController.username);
+        ps.setInt(10, divID);
+        int rowsAffected = ps.executeUpdate();
+        DBConnection.closeConnection();
+        return rowsAffected;
+    }
+    public static int update(){
+        return -1;
+    }
+    public static int delete(){
+        return -1;
     }
     private static int findNextCustomerID() throws SQLException {
         String sql = "SELECT MAX(Customer_ID) + 1 AS NextID FROM CUSTOMERS";
