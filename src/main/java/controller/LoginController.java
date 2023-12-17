@@ -20,9 +20,7 @@ public class LoginController {
     @FXML
     private Label errorLabel;
     public void onLogIn(ActionEvent e) throws SQLException, IOException {
-        DBConnection.openConnection();
         String password = UsersQuery.select(usernameTextField.getText());
-        DBConnection.closeConnection();
         if(password == null){
             errorLabel.setText("Username not Found!");
         }

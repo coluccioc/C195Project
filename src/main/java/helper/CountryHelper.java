@@ -18,7 +18,7 @@ public class CountryHelper {
     static {
         canadaFLDs.addAll("Canada1","Canada2","Canada3","Canada4","Canadia","Quebec");
     }
-    public static Country usa = new Country("United States",usaFLDs);
-    public static Country canada = new Country("Canadia",canadaFLDs);
+    public static Country usa = new Country("United States",1);
+    public static Country canada = new Country("Canadia",2);
 
 }

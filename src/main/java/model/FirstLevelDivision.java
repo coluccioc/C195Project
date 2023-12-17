@@ -1,13 +1,9 @@
 package model;
 
-import javafx.collections.ObservableList;
-
-import java.util.List;
-
-public class Country {
+public class FirstLevelDivision {
     private String name;
     private int ID;
-    public Country(String name,int ID){
+    public FirstLevelDivision(String name,int ID){
         this.name = name;
         this.ID = ID;
     }

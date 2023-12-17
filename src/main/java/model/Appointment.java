@@ -59,7 +59,7 @@ public class Appointment {
     public void setType(String type) {
         this.type = type;
     }
-    public ZonedDateTime getStart() {
+    public Timestamp getStart() {
         return start;
     }
     public void setStart(String type) {

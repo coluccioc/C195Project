@@ -25,9 +25,6 @@ public class C195Application extends Application {
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
-
-        CountryHelper.listOfCountries.add(CountryHelper.usa);
-        CountryHelper.listOfCountries.add(CountryHelper.canada);
     }
     public static void main(String[] args) {
         launch();

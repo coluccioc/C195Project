@@ -1,6 +1,8 @@
 package controller;
 
+import dao.CountriesQuery;
 import dao.CustomersQuery;
+import dao.FirstLevelDivisionsQuery;
 import helper.CountryHelper;
 import helper.Navigation;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Country;
+import model.FirstLevelDivision;
 
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +46,7 @@ public class AddCustomerController implements Initializable {
     @FXML
     public ComboBox<Country> countryCombo;
     @FXML
-    public ComboBox<String> firstLevelDivisionCombo;
+    public ComboBox<FirstLevelDivision> firstLevelDivisionCombo;
 
     /**
      * Cancels Part submission, Returns to Main Menu
@@ -53,12 +56,13 @@ public class AddCustomerController implements Initializable {
     public void onCancel(ActionEvent e) throws IOException {
         Navigation.switchToMainMenu(e);
     }
-    public void onCountrySelected(){
+    public void onCountrySelected() throws SQLException {
         if(countryCombo.getSelectionModel().isEmpty()){
             return;
         }
         else{
-            firstLevelDivisionCombo.setItems(countryCombo.getSelectionModel().getSelectedItem().getFirstLevelDivisions());
+            int countryID = countryCombo.getSelectionModel().getSelectedItem().getID();
+            firstLevelDivisionCombo.setItems(FirstLevelDivisionsQuery.select(countryID));
         }
     }
     /**
@@ -147,6 +151,10 @@ public class AddCustomerController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        countryCombo.setItems(CountryHelper.listOfCountries);
+        try {
+            countryCombo.setItems(CountriesQuery.select());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

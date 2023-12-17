@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class UsersQuery {
     public static String select(String username) throws SQLException {
+        DBConnection.openConnection();
         String sql = "SELECT * FROM USERS WHERE User_Name = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ps.setString(1,username);
@@ -13,6 +14,8 @@ public class UsersQuery {
         if(!rs.next()){
             return null;
         }
-        return rs.getString("Password");
+        String password = rs.getString("Password");
+        DBConnection.closeConnection();
+        return password;
     }
 }
