@@ -22,7 +22,7 @@
             <TableColumn fx:id="customersPhoneColumn" prefWidth="83.0" text="Phone" />
         </columns>
       </TableView>
-      <Button layoutX="1093.0" layoutY="561.0" mnemonicParsing="false" onAction="#onLogOut" text="Log Out" />
+      <Button layoutX="996.0" layoutY="558.0" mnemonicParsing="false" onAction="#onLogOut" text="Log Out" />
       <TableView fx:id="appointmentsTable" layoutX="622.0" layoutY="123.0" prefHeight="255.0" prefWidth="374.0">
          <columns>
             <TableColumn fx:id="appointmentsIDColumn" prefWidth="46.0" text="ID" />

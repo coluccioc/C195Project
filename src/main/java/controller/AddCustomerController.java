@@ -66,7 +66,6 @@ public class AddCustomerController implements Initializable {
      * @throws IOException
      */
     public void onSave(ActionEvent e) throws IOException, SQLException {
-        String error = "";
         int id = CustomersQuery.getNextCustomerID();
         String name = nameText.getText();
         if(name.isBlank()) {errorLabel.setText("Name cannot be blank!"); return;}

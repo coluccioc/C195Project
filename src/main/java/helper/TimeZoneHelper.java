@@ -8,8 +8,8 @@ import java.time.ZonedDateTime;
 
 public class TimeZoneHelper {
     private static ZoneId utcZone = ZoneId.of("UTC");
+    public static ZoneId systemZone = ZoneId.systemDefault();
 public static Timestamp translateToSystemZone(Timestamp utcTime){
-        ZoneId systemZone = ZoneId.systemDefault();
         ZonedDateTime utcZoned = utcTime.toLocalDateTime().atZone(utcZone);
         ZonedDateTime systemZoned = ZonedDateTime.ofInstant(utcZoned.toInstant(),systemZone);
         Timestamp systemTime = Timestamp.valueOf(systemZoned.toLocalDateTime());
