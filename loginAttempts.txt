@@ -1,0 +1,13 @@
+USER INPUT: test  |  SUCCESS: false
+USER INPUT: fnawklwfnawkf  |  SUCCESS: false
+USER INPUT: admin  |  SUCCESS: true
+USER INPUT: testicle  |  SUCCESS: false
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: admin  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
