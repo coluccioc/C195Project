@@ -51,22 +51,22 @@ public class UpdateCustomerController implements Initializable {
     }
     public void onCountrySelected() throws SQLException {
         if(countryCombo.getSelectionModel().isEmpty()){
-            return;
         }
         else{
+            countryCombo.getSelectionModel().clearSelection();
             int countryID = countryCombo.getSelectionModel().getSelectedItem().getID();
             firstLevelDivisionCombo.setItems(FirstLevelDivisionsQuery.select(countryID));
         }
     }
     /**
      * Adds Part using the values from all text fields to a new In House or Outsourced object.
-     * Performs input validation on all inputs upon submission. Cancels and populates ErrorLable if invalid
+     * Performs input validation on all inputs upon submission. Cancels and populates ErrorLabel if invalid
      * Returns to the main menu upon successful submission
      * @param e ActionEvent for the Save button
      * @throws IOException
      */
     public void onSave(ActionEvent e) throws IOException, SQLException {
-        int id = CustomersQuery.getNextCustomerID();
+        int id = MainMenuController.selectedCustomer.getCustomer_ID();
         String name = nameText.getText();
         if(name.isBlank()) {errorLabel.setText("Name cannot be blank!"); return;}
         String address = addressText.getText();
@@ -83,7 +83,7 @@ public class UpdateCustomerController implements Initializable {
             errorLabel.setText("Please select a Country and First Level Division!");
             return;
         }
-        CustomersQuery.insert(id,
+        CustomersQuery.update(id,
                 name,
                 address,
                 postal,
@@ -99,11 +99,25 @@ public class UpdateCustomerController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        int divisionID = MainMenuController.selectedCustomer.getDivision_ID();
+        int countryID;
+        FirstLevelDivision FLD;
+        Country selectedCountry;
         try {
-            customerIDText.textProperty().set(CustomersQuery.getNextCustomerID()+"");
+            countryID = FirstLevelDivisionsQuery.selectCountryID(divisionID);
+            FLD = FirstLevelDivisionsQuery.selectGivenFLD(divisionID);
+            selectedCountry = CountriesQuery.select(countryID);
+            firstLevelDivisionCombo.setItems(FirstLevelDivisionsQuery.select(countryID));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        customerIDText.setText(""+MainMenuController.selectedCustomer.getCustomer_ID());
+        nameText.setText(MainMenuController.selectedCustomer.getCustomer_Name());
+        addressText.setText(MainMenuController.selectedCustomer.getAddress());
+        postalCodeText.setText(MainMenuController.selectedCustomer.getPostal_Code());
+        phoneText.setText(MainMenuController.selectedCustomer.getPhone());
+        countryCombo.setValue(selectedCountry);
+        firstLevelDivisionCombo.setValue(FLD);
         try {
             countryCombo.setItems(CountriesQuery.select());
         } catch (SQLException e) {

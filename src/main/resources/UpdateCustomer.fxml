@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomerController">
+<AnchorPane prefHeight="400.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UpdateCustomerController">
    <children>
       <Label layoutX="39.0" layoutY="26.0" text="Update Customer">
          <font>
@@ -51,26 +51,6 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="510.0" layoutY="62.0" text="Created Date">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="510.0" layoutY="97.0" text="Created By">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="510.0" layoutY="133.0" text="Last Updated">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label layoutX="510.0" layoutY="175.0" text="Last Updated By">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
       <TextField fx:id="customerIDText" editable="false" layoutX="301.0" layoutY="62.0">
          <cursor>
             <Cursor fx:constant="DEFAULT" />
@@ -80,43 +60,11 @@
          </effect>
       </TextField>
       <TextField fx:id="nameText" layoutX="300.0" layoutY="97.0" />
-      <TextField fx:id="AddressText" layoutX="300.0" layoutY="133.0" />
+      <TextField fx:id="addressText" layoutX="300.0" layoutY="133.0" />
       <TextField fx:id="postalCodeText" layoutX="300.0" layoutY="175.0" />
       <TextField fx:id="phoneText" layoutX="302.0" layoutY="217.0" />
-      <ComboBox fx:id="countryCombo" layoutX="301.0" layoutY="253.0" prefWidth="150.0" />
+      <ComboBox fx:id="countryCombo" layoutX="301.0" layoutY="253.0" onAction="#onCountrySelected" prefWidth="150.0" />
       <ComboBox fx:id="firstLevelDivisionCombo" layoutX="300.0" layoutY="290.0" prefWidth="150.0" />
-      <TextField fx:id="createdDateText" editable="false" layoutX="643.0" layoutY="62.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-         <effect>
-            <ColorAdjust brightness="-0.25" />
-         </effect>
-      </TextField>
-      <TextField fx:id="createdByText" editable="false" layoutX="643.0" layoutY="97.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-         <effect>
-            <ColorAdjust brightness="-0.25" />
-         </effect>
-      </TextField>
-      <TextField fx:id="lastUpdatedText" editable="false" layoutX="643.0" layoutY="133.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-         <effect>
-            <ColorAdjust brightness="-0.25" />
-         </effect>
-      </TextField>
-      <TextField fx:id="lastUpdatedByText" editable="false" layoutX="643.0" layoutY="175.0">
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-         <effect>
-            <ColorAdjust brightness="-0.25" />
-         </effect>
-      </TextField>
       <Button layoutX="159.0" layoutY="329.0" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
       <Button layoutX="226.0" layoutY="329.0" mnemonicParsing="false" onAction="#onSave" text="Save" />
       <Label fx:id="errorLabel" layoutX="67.0" layoutY="363.0" textFill="#ff0606" />

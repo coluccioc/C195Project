@@ -21,5 +21,16 @@ public class CountriesQuery{
             }
             DBConnection.closeConnection();
             return countries;
-        }
+    }
+    public static Country select(int countryID) throws SQLException {
+        DBConnection.openConnection();
+        String sql = "SELECT * FROM COUNTRIES WHERE COUNTRY_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,countryID);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        String name = rs.getString("Country");
+        DBConnection.closeConnection();
+        return new Country(name,countryID);
+    }
 }

@@ -10,7 +10,7 @@
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
    <children>
       <Label fx:id="welcomeLabel" layoutX="14.0" layoutY="14.0" text="Welcome, " />
-      <Button layoutX="211.0" layoutY="398.0" mnemonicParsing="false" onAction="#onAddCustomer" text="Add Customer" />
+      <Button layoutX="70.0" layoutY="398.0" mnemonicParsing="false" onAction="#onAddCustomer" text="Add Customer" />
       <Button layoutX="323.0" layoutY="398.0" mnemonicParsing="false" onAction="#onDeleteCustomer" text="Delete Customer" />
       <TableView fx:id="customersTable" layoutX="70.0" layoutY="123.0" prefHeight="255.0" prefWidth="374.0">
         <columns>
@@ -37,5 +37,8 @@
       <Label layoutX="250.0" layoutY="95.0" text="Search" />
       <Button layoutX="444.0" layoutY="238.0" mnemonicParsing="false" onAction="#onSelectCustomer" text="Show Customer Appointments" />
       <Label fx:id="errorLabel" layoutX="70.0" layoutY="553.0" textFill="RED" />
+      <Button layoutX="185.0" layoutY="398.0" mnemonicParsing="false" onAction="#onUpdateCustomer" text="Update Customer" />
+      <Label layoutX="70.0" layoutY="104.0" text="Customers" />
+      <Label layoutX="622.0" layoutY="104.0" text="Appointments" />
    </children>
 </AnchorPane>

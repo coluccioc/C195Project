@@ -37,7 +37,7 @@ public class CustomersQuery {
                 PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
                 ps.setInt(1,searchID);
                 ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
+                while (rs.next()){
                     int id = rs.getInt("CUSTOMER_ID");
                     String name = rs.getString("CUSTOMER_NAME");
                     String address = rs.getString("ADDRESS");
@@ -94,8 +94,32 @@ public class CustomersQuery {
         DBConnection.closeConnection();
         return rowsAffected;
     }
-    public static int update(){
-        return -1;
+    public static int update(int ID, String name,String address,String postal,String phone,int divID) throws SQLException {
+        DBConnection.openConnection();
+        ZonedDateTime now = ZonedDateTime.now();
+        Timestamp nowTimestamp = Timestamp.from(now.toInstant());
+        String sql = "UPDATE CUSTOMERS " +
+                "SET CUSTOMER_NAME = ?, " + //1
+                "ADDRESS = ?," + //2
+                "POSTAL_CODE = ?," + //3
+                "PHONE = ?," + //4
+                "LAST_UPDATE = ?," + //5
+                "LAST_UPDATED_BY = ?," + //6
+                "DIVISION_ID = ? " + //7
+                "WHERE CUSTOMER_ID = ?;"; //8
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1, name);
+        ps.setString(2, address);
+        ps.setString(3, postal);
+        ps.setString(4, phone);
+        ps.setTimestamp(5, nowTimestamp);
+        ps.setString(6, LoginController.username);
+        ps.setInt(7, divID);
+        ps.setInt(8, ID);
+
+        int rowsAffected = ps.executeUpdate();
+        DBConnection.closeConnection();
+        return rowsAffected;
     }
     public static int delete(int ID) throws SQLException {
         DBConnection.openConnection();

@@ -11,3 +11,23 @@ USER INPUT: admin  |  SUCCESS: true
 USER INPUT: test  |  SUCCESS: true
 USER INPUT: test  |  SUCCESS: true
 USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: false
+USER INPUT:   |  SUCCESS: false
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true
+USER INPUT: test  |  SUCCESS: true

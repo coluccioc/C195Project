@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Appointment;
 import model.Customer;
 
 import java.io.IOException;
@@ -39,7 +40,6 @@ public class MainMenuController implements Initializable{
     private TableColumn customersDivisionIDColumn;
     @FXML
     private TableColumn customersPhoneColumn;
-
     @FXML
     private TableView appointmentsTable;
     @FXML
@@ -54,6 +54,9 @@ public class MainMenuController implements Initializable{
     private TableColumn appointmentsTypeColumn;
     @FXML
     private TableColumn appointmentsStartColumn;
+    public static Customer selectedCustomer;
+    public static Appointment selectedAppointment;
+
     public void onSelectCustomer() throws SQLException {
         Customer selection = (Customer) customersTable.getSelectionModel().getSelectedItem();
 
@@ -70,10 +73,20 @@ public class MainMenuController implements Initializable{
     public void onAddCustomer(ActionEvent e) throws IOException {
         Navigation.switchToAddCustomer(e);
     }
-    public void onDeleteCustomer(ActionEvent e) throws SQLException {
-        int selectedID = 0;
+    public void onUpdateCustomer(ActionEvent e) throws IOException {
+        selectedCustomer = (Customer)customersTable.getSelectionModel().getSelectedItem();
+        if(selectedCustomer == null){
+            errorLabel.setText("No Customer Selected!");
+        }
+        else {
+            Navigation.switchToUpdateCustomer(e);
+        }
+    }
+    public void onDeleteCustomer() throws SQLException {
+        int selectedID;
+        Customer selected;
         if(customersTable.getSelectionModel().getSelectedItem() != null){
-            Customer selected = (Customer) customersTable.getSelectionModel().getSelectedItem();
+            selected = (Customer) customersTable.getSelectionModel().getSelectedItem();
             selectedID = selected.getCustomer_ID();
         }
         else {
@@ -81,10 +94,11 @@ public class MainMenuController implements Initializable{
             return;
         }
         if(AppointmentsQuery.getCustomerAppointments(selectedID).isEmpty()){
+            String name = selected.getCustomer_Name();
             CustomersQuery.delete(selectedID);
             customersTable.setItems(CustomersQuery.getCustomers());
             appointmentsTable.setItems(AppointmentsQuery.getAppointments());
-            errorLabel.setText("");
+            errorLabel.setText("Customer: " + name + " has been deleted!");
         }
         else{
             errorLabel.setText("Cannot Delete a Customer with Appointments!");

@@ -23,4 +23,27 @@ public class FirstLevelDivisionsQuery {
         DBConnection.closeConnection();
         return FLDs;
     }
+    public static FirstLevelDivision selectGivenFLD(int firstLevelDivisionID) throws SQLException {
+        DBConnection.openConnection();
+        String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE DIVISION_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,firstLevelDivisionID);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        String name = rs.getString("DIVISION");
+        FirstLevelDivision FLD = new FirstLevelDivision(name,firstLevelDivisionID);
+        DBConnection.closeConnection();
+        return FLD;
+    }
+    public static int selectCountryID(int firstLevelDivisionID) throws SQLException {
+        DBConnection.openConnection();
+        String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE DIVISION_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,firstLevelDivisionID);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        int country_ID = rs.getInt("COUNTRY_ID");
+        DBConnection.closeConnection();
+        return country_ID;
+    }
 }
