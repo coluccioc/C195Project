@@ -35,6 +35,14 @@ public class Navigation {
         stage.setTitle("Add Customer");
         stage.show();
     }
+    public static void switchToAddAppointment(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Navigation.class.getResource("/AddAppointment.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root,500,400);
+        stage.setScene(scene);
+        stage.setTitle("Add Appointment");
+        stage.show();
+    }
     public static void switchToUpdateCustomer(ActionEvent e) throws IOException {
         root = FXMLLoader.load(Navigation.class.getResource("/UpdateCustomer.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();

@@ -31,6 +31,7 @@
             <TableColumn fx:id="appointmentsLocationColumn" prefWidth="83.0" text="Location" />
             <TableColumn fx:id="appointmentsTypeColumn" prefWidth="67.0" text="Type" />
             <TableColumn fx:id="appointmentsStartColumn" prefWidth="83.0" text="Start" />
+            <TableColumn fx:id="appointmentsEndColumn" prefWidth="83.0" text="End" />
          </columns>
       </TableView>
       <TextField fx:id="searchCustomerText" layoutX="295.0" layoutY="91.0" onAction="#onSearchCustomer" />
@@ -40,5 +41,6 @@
       <Button layoutX="185.0" layoutY="398.0" mnemonicParsing="false" onAction="#onUpdateCustomer" text="Update Customer" />
       <Label layoutX="70.0" layoutY="104.0" text="Customers" />
       <Label layoutX="622.0" layoutY="104.0" text="Appointments" />
+      <Button layoutX="622.0" layoutY="398.0" mnemonicParsing="false" onAction="#onAddAppointment" text="Add Apointment" />
    </children>
 </AnchorPane>

@@ -26,10 +26,12 @@ public class AppointmentsQuery {
             String type = rs.getString("TYPE");
             Timestamp startUTC = rs.getTimestamp("START");
             Timestamp start = TimeZoneHelper.translateToSystemZone(startUTC);
-            appointments.add(new Appointment(id,title,description,location,type,start));
+            Timestamp endUTC = rs.getTimestamp("END");
+            Timestamp end = TimeZoneHelper.translateToSystemZone(endUTC);
+            appointments.add(new Appointment(id,title,description,location,type,start,end));
         }
     }
-    private static void select(int customer_ID) throws SQLException {
+    private static void selectByCust(int customer_ID) throws SQLException {
         appointments.clear();
         String sql = "SELECT * FROM APPOINTMENTS WHERE CUSTOMER_ID=?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -43,7 +45,9 @@ public class AppointmentsQuery {
             String type = rs.getString("TYPE");
             Timestamp startUTC = rs.getTimestamp("START");
             Timestamp start = TimeZoneHelper.translateToSystemZone(startUTC);
-            appointments.add(new Appointment(id,title,description,location,type,start));
+            Timestamp endUTC = rs.getTimestamp("END");
+            Timestamp end = TimeZoneHelper.translateToSystemZone(endUTC);
+            appointments.add(new Appointment(id,title,description,location,type,start,end));
         }
     }
     private static int findNextAppointmentID() throws SQLException {
@@ -55,7 +59,7 @@ public class AppointmentsQuery {
         }
         else {
             DBConnection.closeConnection();
-            return -1;
+            return 1;
         }
     }
     public static int getNextAppointmentID() throws SQLException {
@@ -72,7 +76,7 @@ public class AppointmentsQuery {
     }
     public static ObservableList<Appointment> getCustomerAppointments(int customer_ID) throws SQLException {
         DBConnection.openConnection();
-        select(customer_ID);
+        selectByCust(customer_ID);
         DBConnection.closeConnection();
         return appointments;
     }

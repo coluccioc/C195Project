@@ -139,7 +139,7 @@ public class CustomersQuery {
         }
         else {
             DBConnection.closeConnection();
-            return -1;
+            return 1;
         }
     }
     public static int getNextCustomerID() throws SQLException {
@@ -165,4 +165,5 @@ public class CustomersQuery {
         DBConnection.closeConnection();
         return customers;
     }
+
 }

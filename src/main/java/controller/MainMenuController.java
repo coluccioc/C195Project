@@ -54,6 +54,8 @@ public class MainMenuController implements Initializable{
     private TableColumn appointmentsTypeColumn;
     @FXML
     private TableColumn appointmentsStartColumn;
+    @FXML
+    private TableColumn appointmentsEndColumn;
     public static Customer selectedCustomer;
     public static Appointment selectedAppointment;
 
@@ -72,6 +74,9 @@ public class MainMenuController implements Initializable{
     }
     public void onAddCustomer(ActionEvent e) throws IOException {
         Navigation.switchToAddCustomer(e);
+    }
+    public void onAddAppointment(ActionEvent e) throws IOException {
+        Navigation.switchToAddAppointment(e);
     }
     public void onUpdateCustomer(ActionEvent e) throws IOException {
         selectedCustomer = (Customer)customersTable.getSelectionModel().getSelectedItem();
@@ -134,5 +139,6 @@ public class MainMenuController implements Initializable{
         appointmentsLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
         appointmentsTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentsStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentsEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
     }
 }

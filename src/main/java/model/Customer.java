@@ -15,6 +15,9 @@ public class Customer {
         this.phone = phone;
         this.division_ID = division_ID;
     }
+    public String toString(){
+        return customer_Name;
+    }
     public int getCustomer_ID() {
         return customer_ID;
     }

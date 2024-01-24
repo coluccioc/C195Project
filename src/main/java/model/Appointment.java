@@ -10,16 +10,17 @@ public class Appointment {
     private String location;
     private String type;
     private Timestamp start;
+    private Timestamp end;
 
-    public Appointment(int appointment_ID, String title, String description, String location, String type, Timestamp start) {
+    public Appointment(int appointment_ID, String title, String description, String location, String type, Timestamp start, Timestamp end) {
         this.appointment_ID = appointment_ID;
         this.title = title;
         this.description = description;
         this.location = location;
         this.type = type;
         this.start = start;
+        this.end = end;
     }
-
     public int getAppointment_ID() {
         return appointment_ID;
     }
@@ -62,7 +63,13 @@ public class Appointment {
     public Timestamp getStart() {
         return start;
     }
-    public void setStart(String type) {
+    public void setStart(Timestamp start) {
         this.start = start;
+    }
+    public Timestamp getEnd() {
+        return end;
+    }
+    public void setEnd(Timestamp end) {
+        this.end = end;
     }
 }
