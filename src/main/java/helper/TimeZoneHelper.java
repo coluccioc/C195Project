@@ -1,14 +1,21 @@
 package helper;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
 public class TimeZoneHelper {
     private static ZoneId utcZone = ZoneId.of("UTC");
     public static ZoneId systemZone = ZoneId.systemDefault();
+    public static ObservableList<Integer> hours = FXCollections.observableArrayList();
+    public static ObservableList<String> minutes = FXCollections.observableArrayList();
+    public static ObservableList<String> durations = FXCollections.observableArrayList();
 public static Timestamp translateToSystemZone(Timestamp utcTime){
         ZonedDateTime utcZoned = utcTime.toLocalDateTime().atZone(utcZone);
         ZonedDateTime systemZoned = ZonedDateTime.ofInstant(utcZoned.toInstant(),systemZone);
@@ -17,5 +24,10 @@ public static Timestamp translateToSystemZone(Timestamp utcTime){
     }
     public static ZonedDateTime translateToUTC(ZonedDateTime systemDateTime){
         return ZonedDateTime.ofInstant(systemDateTime.toInstant(),utcZone);
+    }
+    public static int getOffsetHours() {
+        LocalDateTime systemDateTime = LocalDateTime.now();
+        ZoneOffset systemOffset = systemDateTime.atZone(systemZone).getOffset();
+        return systemOffset.getTotalSeconds() / 3600;
     }
 }

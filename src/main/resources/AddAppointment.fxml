@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddAppointmentController">
+<AnchorPane prefHeight="400.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddAppointmentController">
    <children>
       <Label layoutX="39.0" layoutY="26.0" text="Add Appointment">
          <font>
@@ -69,6 +69,35 @@
       <Button layoutX="159.0" layoutY="329.0" mnemonicParsing="false" onAction="#onCancel" text="Cancel" />
       <Button layoutX="226.0" layoutY="329.0" mnemonicParsing="false" onAction="#onSave" text="Save" />
       <Label fx:id="errorLabel" layoutX="67.0" layoutY="363.0" textFill="#ff0606" />
-      <DatePicker layoutX="290.0" layoutY="329.0" />
+      <DatePicker fx:id="datePicker" layoutX="633.0" layoutY="62.0" />
+      <Label layoutX="515.0" layoutY="62.0" text="Start Date">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="515.0" layoutY="97.0" text="Start Time">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="518.0" layoutY="133.0" text="Duration">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="startHourCombo" layoutX="633.0" layoutY="97.0" prefHeight="25.0" prefWidth="61.0" />
+      <ComboBox fx:id="durationCombo" layoutX="633.0" layoutY="133.0" prefHeight="25.0" prefWidth="149.0" />
+      <ComboBox fx:id="startMinuteCombo" layoutX="720.0" layoutY="97.0" prefHeight="25.0" prefWidth="61.0" />
+      <Label layoutX="706.0" layoutY="97.0" text=":">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="518.0" layoutY="253.0" text="Contact">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="contactCombo" layoutX="635.0" layoutY="253.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

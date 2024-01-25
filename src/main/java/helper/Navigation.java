@@ -38,7 +38,7 @@ public class Navigation {
     public static void switchToAddAppointment(ActionEvent e) throws IOException {
         root = FXMLLoader.load(Navigation.class.getResource("/AddAppointment.fxml"));
         stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root,500,400);
+        scene = new Scene(root,900,400);
         stage.setScene(scene);
         stage.setTitle("Add Appointment");
         stage.show();
