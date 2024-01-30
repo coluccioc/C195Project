@@ -42,5 +42,7 @@
       <Label layoutX="70.0" layoutY="104.0" text="Customers" />
       <Label layoutX="622.0" layoutY="104.0" text="Appointments" />
       <Button layoutX="622.0" layoutY="398.0" mnemonicParsing="false" onAction="#onAddAppointment" text="Add Apointment" />
+      <Button layoutX="748.0" layoutY="398.0" mnemonicParsing="false" onAction="#onUpdateAppointment" text="Update Apointment" />
+      <Button layoutX="879.0" layoutY="398.0" mnemonicParsing="false" onAction="#onDeleteAppointment" text="Delete Apointment" />
    </children>
 </AnchorPane>

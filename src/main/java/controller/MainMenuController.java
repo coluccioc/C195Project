@@ -78,6 +78,16 @@ public class MainMenuController implements Initializable{
     public void onAddAppointment(ActionEvent e) throws IOException {
         Navigation.switchToAddAppointment(e);
     }
+    public void onUpdateAppointment(ActionEvent e) throws IOException {
+        selectedAppointment = (Appointment)appointmentsTable.getSelectionModel().getSelectedItem();
+        if(selectedAppointment == null){
+            errorLabel.setText("No Appointment Selected!");
+        }
+        else {
+            Navigation.switchToUpdateAppointment(e);
+        }
+
+    }
     public void onUpdateCustomer(ActionEvent e) throws IOException {
         selectedCustomer = (Customer)customersTable.getSelectionModel().getSelectedItem();
         if(selectedCustomer == null){
@@ -108,6 +118,22 @@ public class MainMenuController implements Initializable{
         else{
             errorLabel.setText("Cannot Delete a Customer with Appointments!");
         }
+    }
+    public void onDeleteAppointment() throws SQLException {
+        int selectedID;
+        Appointment selected;
+        if(appointmentsTable.getSelectionModel().getSelectedItem() != null){
+            selected = (Appointment) appointmentsTable.getSelectionModel().getSelectedItem();
+            selectedID = selected.getAppointment_ID();
+        }
+        else {
+            errorLabel.setText("No Appointment Selected!");
+            return;
+        }
+        String title = selected.getTitle();
+        AppointmentsQuery.delete(selectedID);
+        appointmentsTable.setItems(AppointmentsQuery.getAppointments());
+        errorLabel.setText("Appointment: " + title + " has been deleted!");
     }
     public void onLogOut(ActionEvent e) throws IOException {
         Navigation.logOut(e);

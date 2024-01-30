@@ -74,6 +74,41 @@ public class AppointmentsQuery {
         DBConnection.closeConnection();
         return rowsAffected;
     }
+    public static int update(int ID, String title,String description,String location,String type, Timestamp start,
+                             Timestamp end,int customer_ID,int contact_ID,int user_ID) throws SQLException {
+        DBConnection.openConnection();
+        ZonedDateTime now = ZonedDateTime.now();
+        Timestamp nowTimestamp = Timestamp.from(now.toInstant());
+        String sql = "UPDATE APPOINTMENTS " +
+                "SET TITLE = ?, " + //1
+                "DESCRIPTION = ?," + //2
+                "LOCATION = ?," + //3
+                "TYPE = ?," + //4
+                "START = ?," + //5
+                "END = ?," + //6
+                "CUSTOMER_ID = ?, " + //7
+                "CONTACT_ID = ?, " + //8
+                "USER_ID = ?, " + //9
+                "LAST_UPDATE = ?," + //10
+                "LAST_UPDATED_BY = ?" + //11
+                "WHERE APPOINTMENT_ID = ?;"; //12
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2, description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, start);
+        ps.setTimestamp(6, end);
+        ps.setInt(7, customer_ID);
+        ps.setInt(8, contact_ID);
+        ps.setInt(9, user_ID);
+        ps.setTimestamp(10, nowTimestamp);
+        ps.setString(11, LoginController.username);
+        ps.setInt(12, ID);
+        int rowsAffected = ps.executeUpdate();
+        DBConnection.closeConnection();
+        return rowsAffected;
+    }
     private static void selectByCust(int customer_ID) throws SQLException {
         appointments.clear();
         String sql = "SELECT * FROM APPOINTMENTS WHERE CUSTOMER_ID=?";
@@ -107,6 +142,15 @@ public class AppointmentsQuery {
             DBConnection.closeConnection();
             return 1;
         }
+    }
+    public static int delete(int ID) throws SQLException {
+        DBConnection.openConnection();
+        String sql = "DELETE FROM APPOINTMENTS WHERE APPOINTMENT_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,ID);
+        int rowsAffected = ps.executeUpdate();
+        DBConnection.closeConnection();
+        return rowsAffected;
     }
     public static int getNextAppointmentID() throws SQLException {
         DBConnection.openConnection();

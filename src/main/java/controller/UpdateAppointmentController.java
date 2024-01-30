@@ -13,6 +13,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Appointment;
 import model.Contact;
 import model.Customer;
 import model.User;
@@ -25,13 +26,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 /**
  * The Add Part Scene Controller provides functionality for creating an instance of
  * an In House or Outsourced Part that will be added to the Inventory Part List
  * Also contains a "Cancel" to MainMenu option
  */
-public class AddAppointmentController implements Initializable {
+public class UpdateAppointmentController implements Initializable {
     @FXML
     public Label errorLabel;
     @FXML
@@ -59,6 +61,7 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public ComboBox<String> durationCombo;
     int offsetStartHour;
+    Appointment selectedAppointment;
 
     /**
      * Cancels Part submission, Returns to Main Menu
@@ -77,7 +80,7 @@ public class AddAppointmentController implements Initializable {
      */
     public void onSave(ActionEvent e) throws IOException, SQLException {
         LocalTime openTime = LocalTime.of(offsetStartHour,0);
-        int id = AppointmentsQuery.getNextAppointmentID();
+        int id = Integer.parseInt(appointmentIDText.getText());
         String title = titleText.getText();
         if(title.isBlank()) {errorLabel.setText("Title cannot be blank!"); return;}
         if(title.length()>50) {errorLabel.setText("Title cannot more than 50 characters!"); return;}
@@ -172,7 +175,7 @@ public class AddAppointmentController implements Initializable {
         Timestamp endTimestamp = TimeZoneHelper.convertToUTCTimestamp(endDateTime);
 
 
-        AppointmentsQuery.insert(id,
+        AppointmentsQuery.update(id,
                 title,
                 description,
                 location,
@@ -182,7 +185,7 @@ public class AddAppointmentController implements Initializable {
                 customerID,
                 userID,
                 contactID
-                );
+        );
         Navigation.switchToMainMenu(e);
     }
     /**
@@ -193,18 +196,30 @@ public class AddAppointmentController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        selectedAppointment = MainMenuController.selectedAppointment;
         TimeZoneHelper.hours.clear();
         TimeZoneHelper.minutes.clear();
         TimeZoneHelper.durations.clear();
-        try {
-            appointmentIDText.textProperty().set(AppointmentsQuery.getNextAppointmentID()+"");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        appointmentIDText.textProperty().set(selectedAppointment.getAppointment_ID()+"");
+        titleText.setText(selectedAppointment.getTitle());
+        descriptionText.setText(selectedAppointment.getDescription());
+        locationText.setText(selectedAppointment.getLocation());
+        typeText.setText(selectedAppointment.getType());
+        datePicker.setValue(selectedAppointment.getStart().toLocalDateTime().toLocalDate());
+        startHourCombo.setValue(selectedAppointment.getStart().toLocalDateTime().getHour());
+        String startMinute = selectedAppointment.getStart().toLocalDateTime().getMinute()+"";
+        if(startMinute.equals("0")) startMinute = "00";
+        startMinuteCombo.setValue(startMinute);
+        String duration = TimeZoneHelper.timestampDifference(selectedAppointment.getEnd(),selectedAppointment.getStart());
+        durationCombo.setValue(duration);
         try {
             customerCombo.setItems(CustomersQuery.getCustomers());
             userCombo.setItems(UsersQuery.getUsers());
             contactCombo.setItems(ContactsQuery.getContacts());
+
+            customerCombo.setValue(CustomersQuery.selectByCustomerID(selectedAppointment.getCustomer_ID()));
+            contactCombo.setValue(ContactsQuery.selectByContactID(selectedAppointment.getContact_ID()));
+            userCombo.setValue(UsersQuery.selectByUserID(selectedAppointment.getUser_ID()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

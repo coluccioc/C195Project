@@ -3,6 +3,7 @@ package dao;
 import controller.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Contact;
 import model.Customer;
 
 import java.sql.PreparedStatement;
@@ -63,6 +64,22 @@ public class CustomersQuery {
                 }
             }
         }
+    }
+    public static Customer selectByCustomerID(int ID) throws SQLException {
+        DBConnection.openConnection();
+        String sql = "SELECT * FROM CUSTOMERS WHERE CUSTOMER_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,ID);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        String name = rs.getString("CUSTOMER_NAME");
+        String address = rs.getString("ADDRESS");
+        String postal_Code = rs.getString("POSTAL_CODE");
+        String phone = rs.getString("PHONE");
+        int division_ID = rs.getInt("DIVISION_ID");
+        Customer customer = new Customer(ID,name,address,postal_Code,phone,division_ID);
+        DBConnection.closeConnection();
+        return customer;
     }
     public static int insert(int ID, String name,String address,String postal,String phone,int divID) throws SQLException {
         DBConnection.openConnection();

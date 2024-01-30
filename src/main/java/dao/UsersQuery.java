@@ -23,6 +23,18 @@ public class UsersQuery {
         DBConnection.closeConnection();
         return password;
     }
+    public static User selectByUserID(int ID) throws SQLException {
+        DBConnection.openConnection();
+        String sql = "SELECT * FROM USERS WHERE USER_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,ID);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        String name = rs.getString("USER_NAME");
+        User user = new User(ID,name);
+        DBConnection.closeConnection();
+        return user;
+    }
     public static ObservableList<User> getUsers() throws SQLException {
         users.clear();
         DBConnection.openConnection();

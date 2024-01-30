@@ -51,6 +51,14 @@ public class Navigation {
         stage.setTitle("Update Customer");
         stage.show();
     }
+    public static void switchToUpdateAppointment(ActionEvent e) throws IOException {
+        root = FXMLLoader.load(Navigation.class.getResource("/UpdateAppointment.fxml"));
+        stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root,900,400);
+        stage.setScene(scene);
+        stage.setTitle("Update Appointment");
+        stage.show();
+    }
     public static void logOut(ActionEvent e) throws IOException {
         ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
         FXMLLoader fxmlLoader = new FXMLLoader(Navigation.class.getResource("/Login.fxml"));

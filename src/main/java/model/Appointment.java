@@ -31,52 +31,35 @@ public class Appointment {
     public int getAppointment_ID() {
         return appointment_ID;
     }
-
-    public void setAppointment_ID(int appointment_ID) {
-        this.appointment_ID = appointment_ID;
-    }
-
     public String getTitle() {
         return title;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getType() {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
     public Timestamp getStart() {
         return start;
     }
-    public void setStart(Timestamp start) {
-        this.start = start;
-    }
+
     public Timestamp getEnd() {
         return end;
     }
-    public void setEnd(Timestamp end) {
-        this.end = end;
+    public int getCustomer_ID() {
+        return customer_ID;
+    }
+    public int getContact_ID() {
+        return contact_ID;
+    }
+    public int getUser_ID() {
+        return user_ID;
     }
 }
