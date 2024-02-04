@@ -3,6 +3,7 @@ package controller;
 import dao.AppointmentsQuery;
 import dao.CustomersQuery;
 import helper.Navigation;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -24,6 +25,8 @@ public class MainMenuController implements Initializable{
     private Label welcomeLabel;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label urgentAppointmentLabel;
     @FXML
     private TextField searchCustomerText;
     @FXML
@@ -56,6 +59,12 @@ public class MainMenuController implements Initializable{
     private TableColumn appointmentsStartColumn;
     @FXML
     private TableColumn appointmentsEndColumn;
+    @FXML
+    private TableColumn appointmentsContactColumn;
+    @FXML
+    private TableColumn appointmentsCustomerIDColumn;
+    @FXML
+    private TableColumn appointmentsUserIDColumn;
     public static Customer selectedCustomer;
     public static Appointment selectedAppointment;
 
@@ -67,6 +76,18 @@ public class MainMenuController implements Initializable{
             errorLabel.setText("");
         }
         else errorLabel.setText("No Customer Selected!");
+    }
+    public void onAllAppointmentsSelected() throws SQLException {
+        appointmentsTable.setItems(AppointmentsQuery.getAllAppointments());
+        errorLabel.setText("");
+    }
+    public void onMonthAppointmentsSelected() throws SQLException {
+        appointmentsTable.setItems(AppointmentsQuery.getMonthAppointments());
+        errorLabel.setText("");
+    }
+    public void onWeekAppointmentsSelected() throws SQLException {
+        appointmentsTable.setItems(AppointmentsQuery.getWeekAppointments());
+        errorLabel.setText("");
     }
     public void onSearchCustomer() throws SQLException {
         String searchText = searchCustomerText.getText();
@@ -112,7 +133,7 @@ public class MainMenuController implements Initializable{
             String name = selected.getCustomer_Name();
             CustomersQuery.delete(selectedID);
             customersTable.setItems(CustomersQuery.getCustomers());
-            appointmentsTable.setItems(AppointmentsQuery.getAppointments());
+            appointmentsTable.setItems(AppointmentsQuery.getAllAppointments());
             errorLabel.setText("Customer: " + name + " has been deleted!");
         }
         else{
@@ -132,7 +153,7 @@ public class MainMenuController implements Initializable{
         }
         String title = selected.getTitle();
         AppointmentsQuery.delete(selectedID);
-        appointmentsTable.setItems(AppointmentsQuery.getAppointments());
+        appointmentsTable.setItems(AppointmentsQuery.getAllAppointments());
         errorLabel.setText("Appointment: " + title + " has been deleted!");
     }
     public void onLogOut(ActionEvent e) throws IOException {
@@ -141,6 +162,23 @@ public class MainMenuController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         welcomeLabel.setText("Welcome, " + LoginController.username + "!");
+        //CHECK FOR URGENT APPOINTMENTS
+        try {
+            ObservableList<Appointment> urgentAppointments = AppointmentsQuery.getUrgentAppointments();
+            if(urgentAppointments.isEmpty()){
+                urgentAppointmentLabel.setText("No Urgent Appointments!");
+                System.out.println("No urgent appt detected");
+            }
+            else{
+                Appointment mostUrgent = urgentAppointments.get(0);
+                urgentAppointmentLabel.setText("Appointment ID: "+mostUrgent.getAppointment_ID()+" Starting on: "+
+                        mostUrgent.getStart().toLocalDateTime().toLocalDate() + " at: "+
+                        mostUrgent.getStart().toLocalDateTime().toLocalTime());
+                System.out.println("Urgent appt detected");
+            }
+        }catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
         //Update Customer List upon Main Menu Load
         try {
             customersTable.setItems(CustomersQuery.getCustomers());
@@ -155,7 +193,7 @@ public class MainMenuController implements Initializable{
         customersPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         try {
-            appointmentsTable.setItems(AppointmentsQuery.getAppointments());
+            appointmentsTable.setItems(AppointmentsQuery.getAllAppointments());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -166,5 +204,8 @@ public class MainMenuController implements Initializable{
         appointmentsTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         appointmentsStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         appointmentsEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentsContactColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
+        appointmentsCustomerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customer_ID"));
+        appointmentsUserIDColumn.setCellValueFactory(new PropertyValueFactory<>("user_ID"));
     }
 }

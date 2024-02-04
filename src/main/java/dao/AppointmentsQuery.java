@@ -6,10 +6,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public class AppointmentsQuery {
@@ -109,6 +109,91 @@ public class AppointmentsQuery {
         DBConnection.closeConnection();
         return rowsAffected;
     }
+    private static void selectByMonth() throws SQLException {
+        appointments.clear();
+        LocalDateTime startOfMonthDateTime = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+        LocalDateTime endOfMonthDateTime = startOfMonthDateTime.plusMonths(1);
+        Timestamp startOfMonthTimestamp = TimeZoneHelper.convertToUTCTimestamp(startOfMonthDateTime);
+        Timestamp endOfMonthTimestamp = TimeZoneHelper.convertToUTCTimestamp(endOfMonthDateTime);
+        String sql = "SELECT * FROM APPOINTMENTS WHERE START >= ? AND START < ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setTimestamp(1,startOfMonthTimestamp);
+        ps.setTimestamp(2,endOfMonthTimestamp);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            int id = rs.getInt("APPOINTMENT_ID");
+            String title = rs.getString("TITLE");
+            String description = rs.getString("DESCRIPTION");
+            String location = rs.getString("LOCATION");
+            String type = rs.getString("TYPE");
+            Timestamp startUTC = rs.getTimestamp("START");
+            Timestamp start = TimeZoneHelper.translateToSystemZone(startUTC);
+            Timestamp endUTC = rs.getTimestamp("END");
+            Timestamp end = TimeZoneHelper.translateToSystemZone(endUTC);
+            int customer_ID  = rs.getInt("CUSTOMER_ID");
+            int user_ID = rs.getInt("USER_ID");
+            int contact_ID = rs.getInt("CONTACT_ID");
+            appointments.add(new Appointment(id,title,description,location,type,start,end,customer_ID,user_ID,contact_ID));
+        }
+    }
+    private static void selectByWeek() throws SQLException {
+        appointments.clear();
+        LocalDate currentDate = LocalDate.now();
+        DayOfWeek today = currentDate.getDayOfWeek();
+        //Value of Sunday is 7 in Java DayOfWeek
+        int daysUntilSunday =  DayOfWeek.SUNDAY.getValue() - today.getValue();
+        LocalDateTime endOfWeek = currentDate.plusDays(daysUntilSunday).atStartOfDay();
+        LocalDateTime startOfWeek = endOfWeek.minusDays(7);
+        Timestamp startOfWeekTimestamp = TimeZoneHelper.convertToUTCTimestamp(startOfWeek);
+        Timestamp endOfWeekTimestamp = TimeZoneHelper.convertToUTCTimestamp(endOfWeek);
+        String sql = "SELECT * FROM APPOINTMENTS WHERE START >= ? AND START < ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setTimestamp(1,startOfWeekTimestamp);
+        ps.setTimestamp(2,endOfWeekTimestamp);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            int id = rs.getInt("APPOINTMENT_ID");
+            String title = rs.getString("TITLE");
+            String description = rs.getString("DESCRIPTION");
+            String location = rs.getString("LOCATION");
+            String type = rs.getString("TYPE");
+            Timestamp startUTC = rs.getTimestamp("START");
+            Timestamp start = TimeZoneHelper.translateToSystemZone(startUTC);
+            Timestamp endUTC = rs.getTimestamp("END");
+            Timestamp end = TimeZoneHelper.translateToSystemZone(endUTC);
+            int customer_ID  = rs.getInt("CUSTOMER_ID");
+            int user_ID = rs.getInt("USER_ID");
+            int contact_ID = rs.getInt("CONTACT_ID");
+            appointments.add(new Appointment(id,title,description,location,type,start,end,customer_ID,user_ID,contact_ID));
+        }
+    }
+    private static void selectByUrgent() throws SQLException {
+        appointments.clear();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime urgentDateTime = currentDateTime.plusMinutes(15);
+        Timestamp currentTimestamp = TimeZoneHelper.convertToUTCTimestamp(currentDateTime);
+        Timestamp urgentTimestamp = TimeZoneHelper.convertToUTCTimestamp(urgentDateTime);
+        String sql = "SELECT * FROM APPOINTMENTS WHERE START >= ? AND START < ? ORDER BY START";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setTimestamp(1,currentTimestamp);
+        ps.setTimestamp(2,urgentTimestamp);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()){
+            int id = rs.getInt("APPOINTMENT_ID");
+            String title = rs.getString("TITLE");
+            String description = rs.getString("DESCRIPTION");
+            String location = rs.getString("LOCATION");
+            String type = rs.getString("TYPE");
+            Timestamp startUTC = rs.getTimestamp("START");
+            Timestamp start = TimeZoneHelper.translateToSystemZone(startUTC);
+            Timestamp endUTC = rs.getTimestamp("END");
+            Timestamp end = TimeZoneHelper.translateToSystemZone(endUTC);
+            int customer_ID  = rs.getInt("CUSTOMER_ID");
+            int user_ID = rs.getInt("USER_ID");
+            int contact_ID = rs.getInt("CONTACT_ID");
+            appointments.add(new Appointment(id,title,description,location,type,start,end,customer_ID,user_ID,contact_ID));
+        }
+    }
     private static void selectByCust(int customer_ID) throws SQLException {
         appointments.clear();
         String sql = "SELECT * FROM APPOINTMENTS WHERE CUSTOMER_ID=?";
@@ -158,11 +243,29 @@ public class AppointmentsQuery {
         DBConnection.closeConnection();
         return nextID;
     }
-    public static ObservableList<Appointment> getAppointments() throws SQLException {
+    public static ObservableList<Appointment> getAllAppointments() throws SQLException {
             DBConnection.openConnection();
             select();
             DBConnection.closeConnection();
             return appointments;
+    }
+    public static ObservableList<Appointment> getMonthAppointments() throws SQLException {
+        DBConnection.openConnection();
+        selectByMonth();
+        DBConnection.closeConnection();
+        return appointments;
+    }
+    public static ObservableList<Appointment> getWeekAppointments() throws SQLException {
+        DBConnection.openConnection();
+        selectByWeek();
+        DBConnection.closeConnection();
+        return appointments;
+    }
+    public static ObservableList<Appointment> getUrgentAppointments() throws SQLException {
+        DBConnection.openConnection();
+        selectByUrgent();
+        DBConnection.closeConnection();
+        return appointments;
     }
     public static ObservableList<Appointment> getCustomerAppointments(int customer_ID) throws SQLException {
         DBConnection.openConnection();

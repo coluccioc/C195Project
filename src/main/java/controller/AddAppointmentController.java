@@ -6,6 +6,7 @@ import dao.CustomersQuery;
 import dao.UsersQuery;
 import helper.Navigation;
 import helper.TimeZoneHelper;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Appointment;
 import model.Contact;
 import model.Customer;
 import model.User;
@@ -168,10 +170,23 @@ public class AddAppointmentController implements Initializable {
             }
         }
         LocalDateTime endDateTime = startDateTime.plusHours(durationHours).plusMinutes(durationMinutes);
-
         Timestamp endTimestamp = TimeZoneHelper.convertToUTCTimestamp(endDateTime);
 
-
+        //CHECK FOR OVERLAPPING APPTS FOR GIVEN CUSTOMER
+        //SEE IF START TIME IS BETWEEN ANY EXISTING START/END TIMES
+        ObservableList<Appointment> customerAppointments = AppointmentsQuery.getCustomerAppointments(customerID);
+        for(int i = 0; i < customerAppointments.size();i++){
+            //SEE IF START TIME IS BETWEEN ANY EXISTING START/END TIMES
+            //IF START OR END IS BETWEEN ANOTHER APPOINTMENT'S START OR END, WE OVERLAPPED
+            Appointment indexAppointment = customerAppointments.get(i);
+            LocalDateTime indexStart = indexAppointment.getStart().toLocalDateTime();
+            LocalDateTime indexEnd = indexAppointment.getEnd().toLocalDateTime();
+            if((startDateTime.compareTo(indexStart)>=0&&startDateTime.compareTo(indexEnd)<=0)
+            || (endDateTime.compareTo(indexStart)>=0&&endDateTime.compareTo(indexEnd)<=0)){
+                errorLabel.setText("Appointment cannot overlap an existing Appointment for this Customer!");
+                return;
+            }
+        }
         AppointmentsQuery.insert(id,
                 title,
                 description,

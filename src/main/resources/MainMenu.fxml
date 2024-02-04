@@ -2,9 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainMenuController">
@@ -32,6 +34,9 @@
             <TableColumn fx:id="appointmentsTypeColumn" prefWidth="67.0" text="Type" />
             <TableColumn fx:id="appointmentsStartColumn" prefWidth="83.0" text="Start" />
             <TableColumn fx:id="appointmentsEndColumn" prefWidth="83.0" text="End" />
+            <TableColumn fx:id="appointmentsContactColumn" prefWidth="83.0" text="Contact" />
+            <TableColumn fx:id="appointmentsCustomerIDColumn" prefWidth="83.0" text="Customer ID" />
+            <TableColumn fx:id="appointmentsUserIDColumn" prefWidth="83.0" text="User ID" />
          </columns>
       </TableView>
       <TextField fx:id="searchCustomerText" layoutX="295.0" layoutY="91.0" onAction="#onSearchCustomer" />
@@ -44,5 +49,13 @@
       <Button layoutX="622.0" layoutY="398.0" mnemonicParsing="false" onAction="#onAddAppointment" text="Add Apointment" />
       <Button layoutX="748.0" layoutY="398.0" mnemonicParsing="false" onAction="#onUpdateAppointment" text="Update Apointment" />
       <Button layoutX="879.0" layoutY="398.0" mnemonicParsing="false" onAction="#onDeleteAppointment" text="Delete Apointment" />
+      <RadioButton layoutX="731.0" layoutY="104.0" mnemonicParsing="false" onAction="#onAllAppointmentsSelected" selected="true" text="All">
+         <toggleGroup>
+            <ToggleGroup fx:id="AppointmentRange" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="787.0" layoutY="104.0" mnemonicParsing="false" onAction="#onMonthAppointmentsSelected" text="Month" toggleGroup="$AppointmentRange" />
+      <RadioButton layoutX="857.0" layoutY="104.0" mnemonicParsing="false" onAction="#onWeekAppointmentsSelected" text="Week" toggleGroup="$AppointmentRange" />
+      <Label fx:id="urgentAppointmentLabel" layoutX="70.0" layoutY="468.0" text="No Urgent Appoinments" />
    </children>
 </AnchorPane>

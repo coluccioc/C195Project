@@ -1,7 +1,9 @@
 package model;
 
+import dao.ContactsQuery;
+
+import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 
 public class Appointment {
     private int appointment_ID;
@@ -12,11 +14,12 @@ public class Appointment {
     private int customer_ID;
     private int user_ID;
     private int contact_ID;
+    private String contact;
     private Timestamp start;
     private Timestamp end;
 
     public Appointment(int appointment_ID, String title, String description, String location, String type,
-                       Timestamp start, Timestamp end, int customer_ID, int user_ID, int contact_ID) {
+                       Timestamp start, Timestamp end, int customer_ID, int user_ID, int contact_ID) throws SQLException {
         this.appointment_ID = appointment_ID;
         this.title = title;
         this.description = description;
@@ -27,6 +30,7 @@ public class Appointment {
         this.customer_ID = customer_ID;
         this.user_ID = user_ID;
         this.contact_ID = contact_ID;
+        this.contact = ContactsQuery.selectByContactID(contact_ID).toString();
     }
     public int getAppointment_ID() {
         return appointment_ID;
@@ -58,6 +62,9 @@ public class Appointment {
     }
     public int getContact_ID() {
         return contact_ID;
+    }
+    public String getContact() {
+        return contact;
     }
     public int getUser_ID() {
         return user_ID;
