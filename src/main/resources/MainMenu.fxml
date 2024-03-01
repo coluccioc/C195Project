@@ -57,5 +57,6 @@
       <RadioButton layoutX="787.0" layoutY="104.0" mnemonicParsing="false" onAction="#onMonthAppointmentsSelected" text="Month" toggleGroup="$AppointmentRange" />
       <RadioButton layoutX="857.0" layoutY="104.0" mnemonicParsing="false" onAction="#onWeekAppointmentsSelected" text="Week" toggleGroup="$AppointmentRange" />
       <Label fx:id="urgentAppointmentLabel" layoutX="70.0" layoutY="468.0" text="No Urgent Appoinments" />
+      <Button layoutX="903.0" layoutY="558.0" mnemonicParsing="false" onAction="#onReporting" text="Reporting" />
    </children>
 </AnchorPane>

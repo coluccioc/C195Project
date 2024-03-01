@@ -42,7 +42,7 @@ public class UpdateCustomerController implements Initializable {
     public ComboBox<FirstLevelDivision> firstLevelDivisionCombo;
 
     /**
-     * Cancels Part submission, Returns to Main Menu
+     * Cancels Customer submission, Returns to Main Menu
      * @param e ActionEvent for Back Button
      * @throws IOException
      */
@@ -59,7 +59,7 @@ public class UpdateCustomerController implements Initializable {
         }
     }
     /**
-     * Adds Part using the values from all text fields to a new In House or Outsourced object.
+     * Adds Customer using the values from all text fields to a new Customer Record in the database
      * Performs input validation on all inputs upon submission. Cancels and populates ErrorLabel if invalid
      * Returns to the main menu upon successful submission
      * @param e ActionEvent for the Save button
@@ -94,6 +94,7 @@ public class UpdateCustomerController implements Initializable {
     /**
      * Actions to take before showing the Scene.
      * Sets the ID value to display. The rest of the info is User Input
+     * Populates the country combobox
      * @param url
      * @param resourceBundle
      */

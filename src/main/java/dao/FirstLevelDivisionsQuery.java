@@ -10,6 +10,13 @@ import java.sql.SQLException;
 
 public class FirstLevelDivisionsQuery {
     private static ObservableList<FirstLevelDivision> FLDs = FXCollections.observableArrayList();
+
+    /**
+     * selects all FLDs from a given Country
+     * @param countryID Country to select FLDs from
+     * @return list of FirstLevelDivisions
+     * @throws SQLException
+     */
     public static ObservableList<FirstLevelDivision> select(int countryID) throws SQLException {
         FLDs.clear();
         DBConnection.openConnection();
@@ -23,6 +30,12 @@ public class FirstLevelDivisionsQuery {
         DBConnection.closeConnection();
         return FLDs;
     }
+    /**
+     * Selects an FLD matching a given FLD ID
+     * @param firstLevelDivisionID ID to select match from (Unique)
+     * @return FirstLevelDivision
+     * @throws SQLException
+     */
     public static FirstLevelDivision selectGivenFLD(int firstLevelDivisionID) throws SQLException {
         DBConnection.openConnection();
         String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE DIVISION_ID = ?";
@@ -35,6 +48,13 @@ public class FirstLevelDivisionsQuery {
         DBConnection.closeConnection();
         return FLD;
     }
+
+    /**
+     * Finds CountryID based on given FLD ID
+     * @param firstLevelDivisionID FLD ID
+     * @return Country ID int
+     * @throws SQLException
+     */
     public static int selectCountryID(int firstLevelDivisionID) throws SQLException {
         DBConnection.openConnection();
         String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE DIVISION_ID = ?";

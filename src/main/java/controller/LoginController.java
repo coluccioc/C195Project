@@ -17,6 +17,12 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * LoginController Class is used to manage input on the Application's login screen
+ * This class validates username/password input and shows errors if submissions are incorrect
+ * Also is built with a ResourceBundle to be able to translate the text on screen to French
+ * based on the user's computer's languate settings
+ */
 public class LoginController implements Initializable {
     public static String username;
     @FXML
@@ -37,6 +43,13 @@ public class LoginController implements Initializable {
     private Button exitButton;
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
 
+    /**
+     * LogIn Method checks to see if the username is valid and the password is correct
+     * Provides informative errors if not
+     * @param e ActionEvent used for navigation
+     * @throws SQLException
+     * @throws IOException
+     */
     public void onLogIn(ActionEvent e) throws SQLException, IOException {
         username = usernameTextField.getText();
         String password = UsersQuery.select(username);
@@ -56,11 +69,21 @@ public class LoginController implements Initializable {
         }
         passwordTextField.setText("");
     }
+
+    /**
+     * Closes Application
+     * @param e
+     */
     @FXML
     public void onExit(ActionEvent e) {
         Navigation.exit(e);
     }
 
+    /**
+     * Initialize method to set the text based on user's language before scene loads
+     * @param url
+     * @param rb Resource Bundle defined by default locale
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         zoneLabel.setText(rb.getString("Region") + ": " + TimeZoneHelper.systemZone.toString());
@@ -68,5 +91,6 @@ public class LoginController implements Initializable {
         passwordLabel.setText(rb.getString("Password"));
         logInButton.setText(rb.getString("Log In"));
         exitButton.setText(rb.getString("Exit"));
+        System.out.println(System.getProperty("javafx.runtime.version"));
     }
 }

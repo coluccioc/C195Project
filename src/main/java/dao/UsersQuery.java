@@ -10,6 +10,12 @@ import java.sql.SQLException;
 
 public class UsersQuery {
     private static ObservableList<User> users = FXCollections.observableArrayList();
+    /**
+     * Selects based on exact match to given Username. Returns corresponding password
+     * @param username given username
+     * @return password String
+     * @throws SQLException
+     */
     public static String select(String username) throws SQLException {
         DBConnection.openConnection();
         String sql = "SELECT * FROM USERS WHERE User_Name = ?";
@@ -23,6 +29,12 @@ public class UsersQuery {
         DBConnection.closeConnection();
         return password;
     }
+    /**
+     * Selects a User by their given ID
+     * @param ID user ID
+     * @return User
+     * @throws SQLException
+     */
     public static User selectByUserID(int ID) throws SQLException {
         DBConnection.openConnection();
         String sql = "SELECT * FROM USERS WHERE USER_ID = ?";
@@ -35,6 +47,11 @@ public class UsersQuery {
         DBConnection.closeConnection();
         return user;
     }
+    /**
+     * Returns list of all Users
+     * @return ObservableList of Users
+     * @throws SQLException
+     */
     public static ObservableList<User> getUsers() throws SQLException {
         users.clear();
         DBConnection.openConnection();

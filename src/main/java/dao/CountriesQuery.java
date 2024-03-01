@@ -10,6 +10,11 @@ import java.sql.SQLException;
 
 public class CountriesQuery{
     private static ObservableList<Country> countries = FXCollections.observableArrayList();
+    /**
+     * Selects and Returns all Countries
+     * @return ObservableList of Countries
+     * @throws SQLException
+     */
     public static ObservableList<Country> select() throws SQLException {
             countries.clear();
             DBConnection.openConnection();
@@ -22,6 +27,12 @@ public class CountriesQuery{
             DBConnection.closeConnection();
             return countries;
     }
+    /**
+     * Selects and returns country matching given ID
+     * @param countryID given contactID
+     * @return Country obj
+     * @throws SQLException
+     */
     public static Country select(int countryID) throws SQLException {
         DBConnection.openConnection();
         String sql = "SELECT * FROM COUNTRIES WHERE COUNTRY_ID = ?";

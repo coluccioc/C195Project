@@ -6,6 +6,7 @@ import dao.CustomersQuery;
 import dao.UsersQuery;
 import helper.Navigation;
 import helper.TimeZoneHelper;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -29,8 +30,8 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 
 /**
- * The Add Part Scene Controller provides functionality for creating an instance of
- * an In House or Outsourced Part that will be added to the Inventory Part List
+ * The Update Appointment Scene Controller provides functionality for updating a record of
+ * an Appointment that will be updated in the database after validating input
  * Also contains a "Cancel" to MainMenu option
  */
 public class UpdateAppointmentController implements Initializable {
@@ -64,7 +65,7 @@ public class UpdateAppointmentController implements Initializable {
     Appointment selectedAppointment;
 
     /**
-     * Cancels Part submission, Returns to Main Menu
+     * Cancels Appointment submission, Returns to Main Menu
      * @param e ActionEvent for Back Button
      * @throws IOException
      */
@@ -72,8 +73,9 @@ public class UpdateAppointmentController implements Initializable {
         Navigation.switchToMainMenu(e);
     }
     /**
-     * Adds Part using the values from all text fields to a new In House or Outsourced object.
-     * Performs input validation on all inputs upon submission. Cancels and populates ErrorLable if invalid
+     * Updates Appointment using the values from all text fields to an existing record
+     * Performs input validation on all inputs upon submission. Cancels and populates ErrorLabel if invalid
+     * Validates the time that the appointment is set to to ensure there are no overlaps
      * Returns to the main menu upon successful submission
      * @param e ActionEvent for the Save button
      * @throws IOException
@@ -174,6 +176,22 @@ public class UpdateAppointmentController implements Initializable {
 
         Timestamp endTimestamp = TimeZoneHelper.convertToUTCTimestamp(endDateTime);
 
+        //CHECK FOR OVERLAPPING APPTS FOR GIVEN CUSTOMER
+        //SEE IF START TIME IS BETWEEN ANY EXISTING START/END TIMES
+        ObservableList<Appointment> customerAppointments =
+                AppointmentsQuery.customerFilter.extract(AppointmentsQuery.getAllAppointments(),customerID);
+        for(int i = 0; i < customerAppointments.size();i++){
+            //SEE IF START TIME IS BETWEEN ANY EXISTING START/END TIMES
+            //IF START OR END IS BETWEEN ANOTHER APPOINTMENT'S START OR END, WE OVERLAPPED
+            Appointment indexAppointment = customerAppointments.get(i);
+            LocalDateTime indexStart = indexAppointment.getStart().toLocalDateTime();
+            LocalDateTime indexEnd = indexAppointment.getEnd().toLocalDateTime();
+            if((startDateTime.compareTo(indexStart)>=0&&startDateTime.compareTo(indexEnd)<=0)
+                    || (endDateTime.compareTo(indexStart)>=0&&endDateTime.compareTo(indexEnd)<=0)){
+                errorLabel.setText("Appointment cannot overlap an existing Appointment for this Customer!");
+                return;
+            }
+        }
 
         AppointmentsQuery.update(id,
                 title,
@@ -191,6 +209,7 @@ public class UpdateAppointmentController implements Initializable {
     /**
      * Actions to take before showing the Scene.
      * Sets the ID value to display. The rest of the info is User Input
+     * Populates the available selections for comboboxes
      * @param url
      * @param resourceBundle
      */

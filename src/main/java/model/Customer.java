@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Model Class for Customer
+ */
 public class Customer {
     private int customer_ID;
     private String customer_Name;
@@ -7,6 +10,16 @@ public class Customer {
     private String postal_Code;
     private String phone;
     private int division_ID;
+
+    /**
+     * Customer Constructor
+     * @param customer_ID
+     * @param customer_Name
+     * @param address
+     * @param postal_Code
+     * @param phone
+     * @param division_ID
+     */
     public Customer(int customer_ID, String customer_Name, String address, String postal_Code, String phone, int division_ID) {
         this.customer_ID = customer_ID;
         this.customer_Name = customer_Name;
@@ -15,54 +28,55 @@ public class Customer {
         this.phone = phone;
         this.division_ID = division_ID;
     }
+
+    /**
+     * toString() override to help populate comboboxes
+     * @return name
+     */
     public String toString(){
         return customer_Name;
     }
+
+    /**
+     * Getter for Customer ID
+     * @return ID
+     */
     public int getCustomer_ID() {
         return customer_ID;
     }
-
-    public void setCustomer_ID(int customer_ID) {
-        this.customer_ID = customer_ID;
-    }
-
+    /**
+     * Getter for Customer Name
+     * @return name
+     */
     public String getCustomer_Name() {
         return customer_Name;
     }
-
-    public void setCustomer_Name(String customer_Name) {
-        this.customer_Name = customer_Name;
-    }
-
+    /**
+     * Getter for Customer Address
+     * @return Address
+     */
     public String getAddress() {
         return address;
     }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
+    /**
+     * Getter for Customer Postal Code
+     * @return postal_code
+     */
     public String getPostal_Code() {
         return postal_Code;
     }
-
-    public void setPostal_Code(String postal_Code) {
-        this.postal_Code = postal_Code;
-    }
-
+    /**
+     * Getter for Customer phone
+     * @return phone
+     */
     public String getPhone() {
         return phone;
     }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
+    /**
+     * Getter for Customer Division ID
+     * @return Division ID
+     */
     public int getDivision_ID() {
         return division_ID;
-    }
-
-    public void setDivision_ID(int division_ID) {
-        this.division_ID = division_ID;
     }
 }

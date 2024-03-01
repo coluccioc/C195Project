@@ -15,23 +15,26 @@ public abstract class DBConnection {
     private static String password = "Passw0rd!"; // Password
     public static Connection connection;  // Connection Interface
 
+    /**
+     * Opens Connection to database
+     */
     public static void openConnection()
     {
         try {
             Class.forName(driver); // Locate Driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
-            System.out.println("Connection successful!");
         }
         catch(Exception e)
         {
             System.out.println("Error:" + e.getMessage());
         }
     }
-
+    /**
+     * Closes Connection to databse
+     */
     public static void closeConnection() {
         try {
             connection.close();
-            System.out.println("Connection closed!");
         }
         catch(Exception e)
         {
@@ -39,4 +42,3 @@ public abstract class DBConnection {
         }
     }
 }
-

@@ -29,9 +29,10 @@ import java.time.LocalTime;
 import java.util.ResourceBundle;
 
 /**
- * The Add Part Scene Controller provides functionality for creating an instance of
- * an In House or Outsourced Part that will be added to the Inventory Part List
+ * The Add Appointment Scene Controller provides functionality for creating a New Appointment Record
+ * that will be stored in the database upon submission
  * Also contains a "Cancel" to MainMenu option
+ * Checks for invalid input in the input fields and for overlapping appointments before submission
  */
 public class AddAppointmentController implements Initializable {
     @FXML
@@ -61,9 +62,8 @@ public class AddAppointmentController implements Initializable {
     @FXML
     public ComboBox<String> durationCombo;
     int offsetStartHour;
-
     /**
-     * Cancels Part submission, Returns to Main Menu
+     * Cancels Appointment submission, Returns to Main Menu
      * @param e ActionEvent for Back Button
      * @throws IOException
      */
@@ -71,8 +71,8 @@ public class AddAppointmentController implements Initializable {
         Navigation.switchToMainMenu(e);
     }
     /**
-     * Adds Part using the values from all text fields to a new In House or Outsourced object.
-     * Performs input validation on all inputs upon submission. Cancels and populates ErrorLable if invalid
+     * Adds Appointment using the values from all text fields
+     * Performs input validation on all inputs upon submission. Cancels and populates errorLabel if invalid
      * Returns to the main menu upon successful submission
      * @param e ActionEvent for the Save button
      * @throws IOException
@@ -146,6 +146,7 @@ public class AddAppointmentController implements Initializable {
             errorLabel.setText("Duration cannot be blank!");
             return;
         }
+        //Complex TIME SELECTED VALIDATION
         int durationHours = Integer.parseInt(duration.charAt(0)+"");
         int durationMinutes = Integer.parseInt(duration.substring(duration.length()-2));
         //create LocalTime to compare to openTime
@@ -174,7 +175,8 @@ public class AddAppointmentController implements Initializable {
 
         //CHECK FOR OVERLAPPING APPTS FOR GIVEN CUSTOMER
         //SEE IF START TIME IS BETWEEN ANY EXISTING START/END TIMES
-        ObservableList<Appointment> customerAppointments = AppointmentsQuery.getCustomerAppointments(customerID);
+        ObservableList<Appointment> customerAppointments =
+                AppointmentsQuery.customerFilter.extract(AppointmentsQuery.getAllAppointments(),customerID);
         for(int i = 0; i < customerAppointments.size();i++){
             //SEE IF START TIME IS BETWEEN ANY EXISTING START/END TIMES
             //IF START OR END IS BETWEEN ANOTHER APPOINTMENT'S START OR END, WE OVERLAPPED

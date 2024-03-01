@@ -3,8 +3,6 @@ package dao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Contact;
-import model.FirstLevelDivision;
-import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +10,12 @@ import java.sql.SQLException;
 
 public class ContactsQuery {
     private static ObservableList<Contact> contacts = FXCollections.observableArrayList();
+
+    /**
+     * Selects and Returns all contacts
+     * @return ObservableList of Contacts
+     * @throws SQLException
+     */
     public static ObservableList<Contact> getContacts() throws SQLException {
         contacts.clear();
         DBConnection.openConnection();
@@ -26,6 +30,13 @@ public class ContactsQuery {
         DBConnection.closeConnection();
         return contacts;
     }
+
+    /**
+     * Selects and returns contact matching given ID
+     * @param ID given contactID
+     * @return Contact obj
+     * @throws SQLException
+     */
     public static Contact selectByContactID(int ID) throws SQLException {
         DBConnection.openConnection();
         String sql = "SELECT * FROM CONTACTS WHERE CONTACT_ID = ?";

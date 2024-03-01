@@ -29,6 +29,11 @@ public class C195Application extends Application {
         stage.setTitle(rb.getString("Log In"));
         stage.show();
     }
+
+    /**
+     * The main method
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }

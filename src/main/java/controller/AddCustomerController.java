@@ -19,9 +19,10 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
- * The Add Part Scene Controller provides functionality for creating an instance of
- * an In House or Outsourced Part that will be added to the Inventory Part List
+ * The Add Customer Scene Controller provides functionality for creating a New Customer Record
+ * that will be stored in the database upon submission
  * Also contains a "Cancel" to MainMenu option
+ * Checks for invalid input in the input fields
  */
 public class AddCustomerController implements Initializable {
     @FXML
@@ -40,26 +41,27 @@ public class AddCustomerController implements Initializable {
     public ComboBox<Country> countryCombo;
     @FXML
     public ComboBox<FirstLevelDivision> firstLevelDivisionCombo;
-
     /**
-     * Cancels Part submission, Returns to Main Menu
+     * Cancels Customer submission, Returns to Main Menu
      * @param e ActionEvent for Back Button
      * @throws IOException
      */
     public void onCancel(ActionEvent e) throws IOException {
         Navigation.switchToMainMenu(e);
     }
+    /**
+     * Event Listenter for a ComboBox selection. Sets the contents of the
+     * First Level Division Combo Box upon selection
+     * @throws IOException
+     */
     public void onCountrySelected() throws SQLException {
-        if(countryCombo.getSelectionModel().isEmpty()){
-            return;
-        }
-        else{
+        if(!countryCombo.getSelectionModel().isEmpty()) {
             int countryID = countryCombo.getSelectionModel().getSelectedItem().getID();
             firstLevelDivisionCombo.setItems(FirstLevelDivisionsQuery.select(countryID));
         }
     }
     /**
-     * Adds Part using the values from all text fields to a new In House or Outsourced object.
+     * Adds Customer using the values from all text fields to a new In House or Outsourced object
      * Performs input validation on all inputs upon submission. Cancels and populates ErrorLable if invalid
      * Returns to the main menu upon successful submission
      * @param e ActionEvent for the Save button
