@@ -21,19 +21,23 @@ public class TimeZoneHelper {
      * @param utcTime utc timestamp
      * @return Local Timestamp
      */
+    /* NO USAGES. FOUND OUT TIMESTAMPS AUTO CONVERT WHEN SET IN SQL QUERY
     public static Timestamp translateToSystemZone(Timestamp utcTime){
         ZonedDateTime utcZoned = utcTime.toLocalDateTime().atZone(utcZone);
         ZonedDateTime systemZoned = ZonedDateTime.ofInstant(utcZoned.toInstant(),systemZone);
         Timestamp systemTime = Timestamp.valueOf(systemZoned.toLocalDateTime());
         return systemTime;
     }
+    */
     /**
      * Translates a system ZonedDateTime to UTC Time
      * @param systemDateTime system ZonedDateTime
      * @return UTC ZonedDateTime
      */
-    public static ZonedDateTime translateToUTC(ZonedDateTime systemDateTime){
-        return ZonedDateTime.ofInstant(systemDateTime.toInstant(),utcZone);
+    public static ZonedDateTime translateToUTC(ZonedDateTime systemDateTime) {
+        Instant instant = systemDateTime.toInstant();
+        ZonedDateTime utcZonedDateTime = instant.atZone(utcZone);
+        return utcZonedDateTime;
     }
     /**
      * Finds the offset between system time and UTC
@@ -49,16 +53,21 @@ public class TimeZoneHelper {
      * @param selectedDateTime local dateTime
      * @return UTC Timestamp
      */
+    /* NO USAGES. FOUND OUT TIMESTAMPS AUTO CONVERT WHEN SET IN SQL QUERY
     public static Timestamp convertToUTCTimestamp(LocalDateTime selectedDateTime){
 
         ZonedDateTime localZonedDateTime = selectedDateTime.atZone(ZoneId.systemDefault());
+        System.out.println("1: "+localZonedDateTime);
 
         ZonedDateTime utcZonedDateTime = translateToUTC(localZonedDateTime);
+        System.out.println("2: "+utcZonedDateTime);
 
         Timestamp timestamp = Timestamp.valueOf(utcZonedDateTime.toLocalDateTime());
+        System.out.println("3: "+timestamp);
 
         return timestamp;
     }
+    */
     /**
      * Finds difference between timestamps to determine duration
      * @param end end Timestamp

@@ -217,12 +217,14 @@ public class MainMenuController implements Initializable{
             return;
         }
         String title = selected.getTitle();
+        String type = selected.getType();
+        int ID = selected.getAppointment_ID();
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to Delete: " + title + "?");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             AppointmentsQuery.delete(selectedID);
             appointmentsTable.setItems(AppointmentsQuery.getAllAppointments());
-            errorLabel.setText("Appointment: " + title + " has been deleted!");
+            errorLabel.setText("Appointment: " + title + " of type: "+ type + ", ID: "+ID+" has been deleted!");
         }
         else errorLabel.setText("");
     }

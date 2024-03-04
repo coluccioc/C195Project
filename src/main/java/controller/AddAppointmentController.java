@@ -74,6 +74,7 @@ public class AddAppointmentController implements Initializable {
      * Adds Appointment using the values from all text fields
      * Performs input validation on all inputs upon submission. Cancels and populates errorLabel if invalid
      * Returns to the main menu upon successful submission
+     * Adjusted upon revision to exclude Timezone conversion as this happens upon submission
      * @param e ActionEvent for the Save button
      * @throws IOException
      */
@@ -135,7 +136,8 @@ public class AddAppointmentController implements Initializable {
         String duration;
         LocalTime startTime = LocalTime.of(selectedHour,selectedMinute);
         LocalDateTime startDateTime = LocalDateTime.of(selectedDate,startTime);
-        Timestamp startTimestamp = TimeZoneHelper.convertToUTCTimestamp(startDateTime);
+        Timestamp startTimestamp = Timestamp.valueOf(startDateTime);
+        //Timestamp startTimestamp = TimeZoneHelper.convertToUTCTimestamp(startDateTime);
         if(startHourCombo.getValue() != null)duration = durationCombo.getValue();
         else {
             errorLabel.setText("Duration cannot be blank!");
@@ -152,9 +154,14 @@ public class AddAppointmentController implements Initializable {
         //create LocalTime to compare to openTime
         LocalTime endTime = startTime.plusHours(durationHours).plusMinutes(durationMinutes);
         //Think about the case where close time (open+14) wraps around, but end time is after.
+        //CASE WHERE CLOSE DOES NOT WRAP
         if(endTime.isAfter(openTime)&&openTime.plusHours(14).isAfter(LocalTime.of(13,0))) {
             if (endTime.isAfter(openTime.plusHours(14))){
                 errorLabel.setText("Appointment extends past the office's close!");
+                return;
+            }
+            if (startTime.isBefore(openTime) || startTime.isAfter(openTime.plusHours(14))){
+                errorLabel.setText("Appointment starts before the office opens!");
                 return;
             }
         }
@@ -170,10 +177,17 @@ public class AddAppointmentController implements Initializable {
                 return;
             }
         }
+        else if(openTime.isAfter(LocalTime.of(10,0))){
+            if(startTime.isAfter(openTime.plusHours(14))&&startTime.isBefore(openTime)){
+                errorLabel.setText("Appointment starts before the office opens!");
+                return;
+            }
+        }
         LocalDateTime endDateTime = startDateTime.plusHours(durationHours).plusMinutes(durationMinutes);
-        Timestamp endTimestamp = TimeZoneHelper.convertToUTCTimestamp(endDateTime);
+        //Timestamp endTimestamp = TimeZoneHelper.convertToUTCTimestamp(endDateTime);
+        Timestamp endTimestamp = Timestamp.valueOf(endDateTime);
 
-        //CHECK FOR OVERLAPPING APPTS FOR GIVEN CUSTOMER
+                //CHECK FOR OVERLAPPING APPTS FOR GIVEN CUSTOMER
         //SEE IF START TIME IS BETWEEN ANY EXISTING START/END TIMES
         ObservableList<Appointment> customerAppointments =
                 AppointmentsQuery.customerFilter.extract(AppointmentsQuery.getAllAppointments(),customerID);

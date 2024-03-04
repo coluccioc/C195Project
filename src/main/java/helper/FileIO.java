@@ -28,7 +28,7 @@ public class FileIO {
             LocalTime nowTimeUTC = nowDateTimeUTC.toLocalTime();
             writer.println("USER INPUT: " + user + ",SUCCESS: " + success + ",DATE: " + nowDateUTC +",TIMESTAMP: "+nowTimeUTC);
         } catch (IOException e) {
-            System.out.println("Login not tracked \n" + e.toString());
+            System.out.println("Login not tracked \n" + e);
         }
     }
 }
